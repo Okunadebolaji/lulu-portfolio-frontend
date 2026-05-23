@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist/lulu-portfolio-ui/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
