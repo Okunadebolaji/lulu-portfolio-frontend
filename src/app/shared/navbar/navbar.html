@@ -2,10 +2,10 @@
   <div class="navbar-container">
     <!-- Logo/Brand -->
     <div class="navbar-brand">
-      
+      <a routerLink="/" class="logo">
         <span class="logo-icon"></span>
         <span class="logo-text">Lois Ajani</span>
-    
+      </a>
     </div>
 
     <!-- Mobile Menu Toggle -->
@@ -29,16 +29,6 @@
 
     <!-- Right Side Actions -->
     <div class="navbar-actions">
-      <!-- Theme Toggle -->
-      <!-- <button 
-        class="theme-toggle"
-        (click)="toggleTheme()"
-        [title]="'Switch to ' + (currentTheme === 'dark' ? 'light' : 'dark') + ' mode'"
-        aria-label="Toggle theme"
-      >
-        <i [class]="'bi bi-' + getThemeIcon()"></i>
-      </button> -->
-
       <!-- Admin Panel Link -->
       <a 
         *ngIf="isAuthenticated"
@@ -66,8 +56,8 @@
         *ngIf="!isAuthenticated"
         routerLink="/auth/login"
         class="login-link"
-       style="color: black;">
-         Login
+      >
+        Login
       </a>
     </div>
   </div>

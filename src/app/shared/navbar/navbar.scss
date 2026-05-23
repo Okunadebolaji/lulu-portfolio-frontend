@@ -1,3 +1,4 @@
+// ✅ Light theme only - no dark mode
 :root {
   --navbar-bg: #ffffff;
   --navbar-text: #1a1a1a;
@@ -6,17 +7,6 @@
   --accent-color: #6366f1;
   --accent-hover: #4f46e5;
   --text-secondary: #666666;
-}
-
-[data-theme='dark'],
-body.dark-theme {
-  --navbar-bg: #1a1a1a;
-  --navbar-text: #e0e0e0;
-  --navbar-border: #333333;
-  --navbar-hover: #2d2d2d;
-  --accent-color: #818cf8;
-  --accent-hover: #6366f1;
-  --text-secondary: #b3b3b3;
 }
 
 .navbar {
@@ -29,10 +19,6 @@ body.dark-theme {
   transition: background-color 0.5s ease, color 0.3s ease;
   backdrop-filter: none;
   background-attachment: fixed;
-
-  &.dark-nav {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  }
 }
 
 .navbar-container {
@@ -47,6 +33,7 @@ body.dark-theme {
   width: 100%;
 }
 
+// ✅ Logo/Brand
 .navbar-brand {
   flex-shrink: 0;
   
@@ -74,6 +61,7 @@ body.dark-theme {
   }
 }
 
+// ✅ Mobile Menu Toggle
 .mobile-toggle {
   display: none;
   flex-direction: column;
@@ -110,6 +98,7 @@ body.dark-theme {
   }
 }
 
+// ✅ Navigation Links
 .nav-links {
   list-style: none;
   display: flex;
@@ -181,6 +170,7 @@ body.dark-theme {
   }
 }
 
+// ✅ Right Side Actions
 .navbar-actions {
   display: flex;
   align-items: center;
@@ -192,28 +182,7 @@ body.dark-theme {
   }
 }
 
-.theme-toggle {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--navbar-text);
-
-  &:hover {
-    background-color: var(--navbar-hover);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
+// ✅ Admin Link
 .admin-link {
   text-decoration: none;
   color: var(--navbar-text);
@@ -235,6 +204,7 @@ body.dark-theme {
   }
 }
 
+// ✅ User Menu
 .user-menu {
   display: flex;
   align-items: center;
@@ -244,7 +214,7 @@ body.dark-theme {
 
   .user-name {
     font-size: 14px;
-    color: var(--navbar-text);
+    color: var(--text-secondary);
     max-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -279,6 +249,7 @@ body.dark-theme {
   }
 }
 
+// ✅ Login Link
 .login-link {
   text-decoration: none;
   color: #ffffff;
@@ -305,10 +276,12 @@ body.dark-theme {
   }
 }
 
+// ✅ Smooth transitions
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+// Remove double transitions for specific elements
 a,
 button,
 .navbar,
@@ -316,6 +289,7 @@ button,
   transition: none;
 }
 
+// Re-apply specific transitions where needed
 a,
 button {
   transition: all 0.3s ease;
