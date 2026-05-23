@@ -2,7 +2,6 @@ import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angula
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { Auth } from '../../core/services/auth';
-import { ThemeService, Theme } from '../../core/services/theme.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -18,11 +17,9 @@ export class Navbar implements OnInit, OnDestroy {
   isAuthenticated = false;
   currentUser: any = null;
   mobileMenuOpen = false;
-  currentTheme: Theme = 'light';
 
   private auth = inject(Auth);
   private router = inject(Router);
-  private themeService = inject(ThemeService);
   private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
 
@@ -33,12 +30,6 @@ export class Navbar implements OnInit, OnDestroy {
         console.log('🔄 Navbar user update:', user);
         this.currentUser = user;
         this.isAuthenticated = !!user;
-      });
-
-    this.themeService.theme$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((theme) => {
-        this.currentTheme = theme;
       });
   }
 
@@ -79,13 +70,5 @@ export class Navbar implements OnInit, OnDestroy {
         });
       }
     });
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-  }
-
-  getThemeIcon(): string {
-    return this.currentTheme === 'dark' ? 'sun' : 'moon';
   }
 }
