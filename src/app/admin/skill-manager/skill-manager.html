@@ -1,0 +1,180 @@
+<!-- Skills List Section -->
+<section class="skills-list-section">
+  <div class="section-header">
+    <h2>Manage Skills</h2>
+    <button class="btn-add-skill" (click)="startAddSkill()" [disabled]="isFormVisible">
+      ➕ Add Skill
+    </button>
+  </div>
+  
+  <!-- Search & Filter -->
+  <div class="filter-controls">
+    <input 
+      type="text" 
+      placeholder="Search skills..." 
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+      class="search-input"
+    />
+    <select [(ngModel)]="selectedCategory" (change)="onCategoryFilter()" class="category-select">
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+    <button class="refresh-btn" (click)="refreshSkills()">⟳ Refresh</button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading skills...</p>
+  </div>
+
+  <!-- Skills Table -->
+  <div *ngIf="!loading && displayedSkills.length > 0" class="skills-table-wrapper">
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Proficiency</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let skill of displayedSkills; trackBy: trackBySkillId">
+          <td>{{ skill.name }}</td>
+          <td><span class="category-badge">{{ skill.category }}</span></td>
+          <td>
+            <div class="proficiency-bar">
+              <div class="proficiency-fill" [style.width.%]="skill.percentage"></div>
+            </div>
+            <span class="proficiency-text">{{ skill.percentage }}%</span>
+          </td>
+          <td class="actions">
+            <button class="btn-edit" (click)="editSkill(skill)"><i class="bi bi-pencil"></i> Edit</button>
+            <button class="btn-delete" (click)="deleteSkill(skill.id)"><i class="bi bi-trash"></i> Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="pagination">
+    <button 
+      class="pagination-btn" 
+      (click)="prevPage()" 
+      [disabled]="currentPage === 1"
+    >
+      ← Previous
+    </button>
+    
+    <div class="page-numbers">
+      <button 
+        *ngFor="let page of getPageNumbers()" 
+        class="page-number" 
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    </div>
+    
+    <button 
+      class="pagination-btn" 
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages"
+    >
+      Next →
+    </button>
+    
+    <div class="pagination-info">
+      Page {{ currentPage }} of {{ totalPages }} ({{ totalSkills }} total)
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && displayedSkills.length === 0" class="empty-state">
+    <p>No skills found</p>
+  </div>
+</section>
+
+<!-- Skill Form Modal -->
+<div *ngIf="isFormVisible" class="form-modal">
+  <div class="modal-overlay" (click)="cancelForm()"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>{{ isEditing() ? 'Edit Skill' : 'Add New Skill' }}</h3>
+      <button class="btn-close" (click)="cancelForm()">✕</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-error">
+      {{ error }}
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="skillForm" (ngSubmit)="saveSkill()" class="skill-form">
+      <div class="form-group">
+        <label for="skill-name">Skill Name *</label>
+        <input
+          id="skill-name"
+          type="text"
+          formControlName="name"
+          placeholder="e.g., Angular, Figma, UX Design"
+          class="form-input"
+        />
+        <small *ngIf="skillForm.get('name')?.invalid && skillForm.get('name')?.touched" class="error-text">
+          Skill name is required (min 3 characters)
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="skill-category">Category *</label>
+        <select formControlName="category" id="skill-category" class="form-input">
+          <option value="Frontend">Frontend</option>
+          <option value="Backend">Backend</option>
+          <option value="Design">Design</option>
+          <option value="Mobile">Mobile</option>
+          <option value="DevOps">DevOps</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="skill-percentage">Proficiency Level (%)*</label>
+        <div class="percentage-input-group">
+          <input
+            id="skill-percentage"
+            type="range"
+            formControlName="percentage"
+            min="0"
+            max="100"
+            class="form-range"
+          />
+          <input
+            type="number"
+            formControlName="percentage"
+            min="0"
+            max="100"
+            class="form-input-number"
+          />
+        </div>
+        <small *ngIf="skillForm.get('percentage')?.invalid && skillForm.get('percentage')?.touched" class="error-text">
+          Proficiency must be between 0 and 100
+        </small>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="cancelForm()">Cancel</button>
+        <button type="submit" class="btn-submit" [disabled]="!isFormValid() || loading">
+          {{ loading ? 'Saving...' : (isEditing() ? 'Update Skill' : 'Add Skill') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,663 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/design-system' as *;
+@use 'styles/theme' as *;
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// ============================================================================
+// GLOBAL RESET & BASE STYLES
+// ============================================================================
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-base;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  &:not(.light-theme):not(.dark-theme) {
+    background-color: #ffffff;
+    color: #1b1c1c;
+  }
+}
+
+// ============================================================================
+// BUTTON STYLING
+// ============================================================================
+
+button,
+.btn {
+  font-family: $font-family-base;
+  border-radius: 6px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 14px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+
+  &:hover:not(:disabled) {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    box-shadow: 0 4px 12px rgba(0, 62, 199, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-secondary {
+  background: var(--surface-container);
+  color: var(--text-primary);
+  border: 1px solid var(--outline-variant);
+
+  &:hover:not(:disabled) {
+    background: var(--surface-container-high);
+    border-color: var(--primary);
+  }
+}
+
+.btn-danger {
+  background: var(--error);
+  color: white;
+  border: 1px solid var(--error);
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(186, 26, 26, 0.2);
+  }
+}
+
+.btn-success {
+  background: var(--success);
+  color: white;
+  border: 1px solid var(--success);
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(32, 201, 151, 0.2);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+
+  &:hover:not(:disabled) {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+}
+
+// ============================================================================
+// INPUT & FORM ELEMENTS
+// ============================================================================
+
+input,
+textarea,
+select {
+  font-family: $font-family-base;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: var(--surface-container-lowest);
+  color: var(--text-primary);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 62, 199, 0.1);
+  }
+
+  &:disabled {
+    background-color: var(--surface-container);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+select {
+  cursor: pointer;
+}
+
+// ============================================================================
+// CARD STYLING
+// ============================================================================
+
+.card,
+.info-card,
+.method-card,
+.message-item,
+.skill-card,
+.project-card {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin-top: 0;
+  }
+
+  p, span {
+    color: var(--text-primary);
+  }
+
+  &:hover {
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transform: translateY(-2px);
+  }
+}
+
+// ============================================================================
+// FORCED LIGHT TEXT SECTIONS
+// ============================================================================
+
+// Contact section with dark background
+.contact-section,
+.cta-section {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  padding: 60px 20px;
+  text-align: center;
+
+  h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    margin-top: 0;
+  }
+
+  p {
+    color: #e0e0e0 !important;
+  }
+
+  .subtitle {
+    color: #e0e0e0 !important;
+  }
+
+  a {
+    color: #ffffff !important;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .cta-button {
+    background: #ffffff !important;
+    color: #003ec7 !important;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+// Hero section on gradient background
+.hero-section,
+.home-hero {
+  background: linear-gradient(135deg, #6a5acd 0%, #8a6fd8 50%, #5a7eff 100%) !important;
+  padding: 100px 20px;
+  text-align: center;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: #1a1a1a !important;
+    font-size: 64px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    color: #434656 !important;
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  p {
+    color: #666666 !important;
+    font-size: 18px;
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+
+  .cta-button {
+    background: #ffffff !important;
+    color: #003ec7 !important;
+    padding: 14px 36px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Dashboard table with forced light text
+.dashboard-table,
+.recent-projects {
+  table {
+    background: #ffffff !important;
+
+    thead {
+      background: #1a1a1a !important;
+
+      th {
+        color: #b0b0b0 !important;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #444;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #e8e8e8;
+
+        &:hover {
+          background: #f5f5f5 !important;
+        }
+
+        td {
+          padding: 16px 12px;
+          color: #1b1c1c !important;
+          font-size: 14px;
+
+          .project-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 12px;
+            vertical-align: middle;
+          }
+
+          .project-info {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .project-name {
+              color: #1b1c1c !important;
+              font-weight: 500;
+            }
+
+            .project-desc {
+              color: #999999 !important;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// UTILITY CLASSES
+// ============================================================================
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.container-sm {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.container-lg {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Text Utilities
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-tertiary {
+  color: var(--text-tertiary) !important;
+}
+
+.text-success {
+  color: var(--success) !important;
+}
+
+.text-error,
+.text-danger {
+  color: var(--error) !important;
+}
+
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-info {
+  color: var(--info) !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+// Background Utilities
+.bg-primary {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.bg-secondary {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.bg-tertiary {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+.bg-success {
+  background: var(--success) !important;
+  color: white !important;
+}
+
+.bg-error,
+.bg-danger {
+  background: var(--error) !important;
+  color: white !important;
+}
+
+.bg-warning {
+  background: var(--warning) !important;
+  color: #000 !important;
+}
+
+.bg-info {
+  background: var(--info) !important;
+  color: white !important;
+}
+
+// Border Utilities
+.border {
+  border: 1px solid var(--border-color);
+}
+
+.border-primary {
+  border-color: var(--primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--secondary) !important;
+}
+
+.rounded {
+  border-radius: 4px;
+}
+
+.rounded-md {
+  border-radius: 6px;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+// Spacing Utilities
+.m-0 { margin: 0; }
+.m-1 { margin: 4px; }
+.m-2 { margin: 8px; }
+.m-3 { margin: 12px; }
+.m-4 { margin: 16px; }
+.m-5 { margin: 20px; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: 4px; }
+.p-2 { padding: 8px; }
+.p-3 { padding: 12px; }
+.p-4 { padding: 16px; }
+.p-5 { padding: 20px; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 4px; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-5 { margin-top: 20px; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 4px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-5 { margin-bottom: 20px; }
+
+// Display Utilities
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline {
+  display: inline;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-grid {
+  display: grid;
+}
+
+// Flex Utilities
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.gap-1 { gap: 4px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-5 { gap: 20px; }
+
+// ============================================================================
+// RESPONSIVE MEDIA QUERIES
+// ============================================================================
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .d-none-mobile {
+    display: none;
+  }
+
+  button,
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .hero-section,
+  .home-hero {
+    padding: 60px 20px;
+
+    h1 {
+      font-size: 40px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+// ============================================================================
+// FOCUS STYLES FOR ACCESSIBILITY
+// ============================================================================
+
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+// ============================================================================
+// SMOOTH SCROLLING & TRANSITIONS
+// ============================================================================
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  transition: all 0.3s ease;
+}

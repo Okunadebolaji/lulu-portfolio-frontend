@@ -1,0 +1,87 @@
+<div 
+  class="project-card"
+  (click)="onCardClick()"
+  [class.featured]="isFeatured"
+  (mouseenter)="isHovered = true"
+  (mouseleave)="isHovered = false"
+>
+  <!-- IMAGE SECTION -->
+  <div class="card-image">
+    <img 
+      [src]="project.thumbnailUrl" 
+      [alt]="project.title"
+      class="thumbnail"
+    />
+    
+    <!-- OVERLAY -->
+    <div class="overlay" [class.visible]="isHovered">
+      <div class="overlay-content">
+        <!-- Featured Badge -->
+        <span *ngIf="isFeatured" class="featured-badge">⭐ Featured</span>
+        
+        <!-- Quick Action Buttons -->
+        <div class="quick-actions">
+          <button 
+            *ngIf="project.liveUrl"
+            class="quick-btn live-btn"
+            (click)="onLiveClick($event)"
+            title="View Live Project"
+          >
+             <i class="bi bi-globe"></i>  Live
+          </button>
+          <button 
+            *ngIf="project.githubUrl"
+            class="quick-btn github-btn"
+            (click)="onGithubClick($event)"
+            title="View on GitHub"
+          >
+              <i class="bi bi-laptop"></i> GitHub
+          </button>
+        </div>
+        
+        <!-- View Details CTA -->
+        <button class="view-btn">View Details →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT SECTION -->
+  <div class="card-content">
+    <!-- Title -->
+    <h3 class="card-title">
+      {{ project.title }}
+    </h3>
+
+    <!-- Description -->
+    <p class="card-description">
+      {{ truncatedDescription }}
+    </p>
+
+    <!-- Footer with Links (Small) -->
+    <div class="card-footer">
+      <div class="link-icons">
+        <a 
+          *ngIf="project.liveUrl"
+          href="javascript:void(0)"
+          class="icon-link"
+          (click)="onLiveClick($event)"
+          title="Live Project"
+        >
+           <i class="bi bi-globe"></i>
+        </a>
+        <a 
+          *ngIf="project.githubUrl"
+          href="javascript:void(0)"
+          class="icon-link"
+          (click)="onGithubClick($event)"
+          title="GitHub"
+        >
+           <i class="bi bi-laptop"></i>
+        </a>
+      </div>
+      
+      <!-- Read More CTA -->
+      <span class="read-more">Read More →</span>
+    </div>
+  </div>
+</div>

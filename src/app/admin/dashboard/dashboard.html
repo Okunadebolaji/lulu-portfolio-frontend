@@ -1,0 +1,181 @@
+<!-- Dashboard Container -->
+<main class="dashboard">
+  <!-- Header Section with Refresh -->
+  <section class="dashboard-header">
+    <div class="header-content">
+      <div>
+        <h1 class="headline-lg">Dashboard</h1>
+        <p class="body-md text-secondary" *ngIf="lastUpdated">
+          Last updated: {{ lastUpdated | date: 'short' }}
+        </p>
+      </div>
+      <button class="btn-refresh" (click)="refreshDashboard()" [disabled]="loading" style="color: white;">
+        <span class="refresh-icon" [class.spinning]="loading">⟳</span>
+        <span class="label-caps" style="color: white;">Refresh</span>
+      </button>
+    </div> 
+  </section>
+
+  <!-- Statistics Grid -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <!-- Total Projects Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+      <i class="bi bi-folder-fill stat-icon"></i>
+          <span class="label-caps">Total Projects</span>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.totalProjects }}</div>
+          <p class="body-sm text-secondary">Projects in portfolio</p>
+        </div>
+        <a routerLink="/admin/projects" class="stat-action">
+          <span class="label-caps">Manage</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Total Skills Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+      <i class="bi bi-star-fill stat-icon"></i>
+          <span class="label-caps">Total Skills</span>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.totalSkills }}</div>
+          <p class="body-sm text-secondary">Skills & expertise</p>
+        </div>
+        <a routerLink="/admin/skills" class="stat-action">
+          <span class="label-caps">Manage</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Average Proficiency Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+         <i class="bi bi-bar-chart-fill stat-icon"></i>
+          <span class="label-caps">Avg Proficiency</span>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.avgProficiency }}%</div>
+          <p class="body-sm text-secondary">Average skill level</p>
+        </div>
+        <div class="stat-action">
+          <span class="label-caps">View</span>
+        </div>
+      </div>
+
+      <!-- Total Categories Card -->
+      <div class="stat-card">
+        <div class="stat-header">
+        <i class="bi bi-tags-fill stat-icon"></i>
+          <span class="label-caps">Categories</span>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.totalCategories }}</div>
+          <p class="body-sm text-secondary">Skill categories</p>
+        </div>
+        <div class="stat-action">
+          <span class="label-caps">View</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Projects Section -->
+  <section class="recent-projects-section">
+    <div class="section-header">
+      <div>
+        <h2 class="headline-md">Recent Projects</h2>
+        <p class="body-sm text-secondary">Latest additions to your portfolio</p>
+      </div>
+      <a routerLink="/admin/projects" class="view-all-link">
+        <span class="label-caps">View All</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loadingProjects" class="loading-state">
+      <div class="skeleton-list">
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+      </div>
+    </div>
+
+    <!-- Projects Table -->
+    <div *ngIf="!loadingProjects && recentProjects.length > 0" class="projects-table-wrapper">
+      <table class="projects-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <!-- <th>Category</th> -->
+            <th>Completed</th>
+            <!-- <th>Actions</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of recentProjects" class="project-row">
+            <td class="project-name">
+              <div class="project-info">
+                <div class="project-thumbnail" *ngIf="project.thumbnailUrl" [style.background-image]="'url(' + project.thumbnailUrl + ')'"></div>
+                <div class="project-details">
+                  <span class="body-md font-semibold">{{ project.title }}</span>
+                  <p class="body-sm text-secondary">{{ project.description | slice: 0: 60 }}{{ project.description.length > 60 ? '...' : '' }}</p>
+                </div>
+              </div>
+            </td>
+            <!-- <td>
+              <span class="category-badge" [attr.data-category]="getCategoryColor(project.category)">
+                {{ project.category }}
+              </span>
+            </td> -->
+            <td>
+              <span class="date-text">{{ formatDate(project.completedDate) }}</span>
+            </td>
+            <!-- <td class="actions-cell">
+              <a [routerLink]="['/admin/projects', project.id]" class="btn-action btn-edit">
+                <span class="label-caps">Edit</span>
+              </a>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loadingProjects && recentProjects.length === 0" class="empty-state">
+     <i class="bi bi-inbox-fill empty-icon"></i>
+      <h3 class="headline-sm">No Projects Yet</h3>
+      <p class="body-md text-secondary">Create your first project to get started</p>
+      <a routerLink="/admin/projects" class="btn btn-primary">
+        Create Project
+      </a>
+    </div>
+  </section>
+
+  <!-- Quick Stats Footer -->
+  <section class="dashboard-footer">
+    <div class="footer-content">
+      <div class="footer-stat">
+        <i class="bi bi-clock-history me-1"></i>
+<span class="label-caps">Last Updated</span>
+        <span class="body-md">{{ lastUpdated | date: 'HH:mm:ss' }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="footer-stat">
+        <span class="label-caps">Portfolio Status</span>
+       <i class="bi" 
+   [class.bi-check-circle-fill]="stats.totalProjects > 0"
+   [class.bi-exclamation-triangle-fill]="stats.totalProjects === 0">
+</i>
+
+<span class="body-md status-badge" [class.active]="stats.totalProjects > 0">
+  {{ stats.totalProjects > 0 ? 'Active' : 'Incomplete' }}
+</span>
+      </div>
+    </div>
+  </section>
+</main>

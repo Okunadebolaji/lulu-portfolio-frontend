@@ -1,0 +1,210 @@
+<div class="project-manager-container">
+  <!-- Header -->
+  <div class="manager-header">
+    <h1>Project Manager</h1>
+    <button 
+      class="btn btn-primary"
+      (click)="openCreateForm()"
+      *ngIf="!showForm"
+    >
+      + Add New Project
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    ✅ {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-error">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-section" *ngIf="showForm">
+    <div class="form-header">
+      <h2>{{ isEditing ? 'Edit Project' : 'Create New Project' }}</h2>
+      <button class="btn btn-secondary" (click)="closeForm()">Close</button>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <!-- Image Upload -->
+      <div class="form-group">
+        <label>📸 Project Thumbnail</label>
+        <div class="upload-box">
+          <button 
+            type="button"
+            class="choose-file-btn"
+            (click)="fileInput.click()"
+          >
+            Choose File
+          </button>
+          <input 
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            #fileInput
+            class="hidden-input"
+          />
+          <p class="upload-hint">or drag and drop your image here</p>
+          <div class="upload-status">
+            <div *ngIf="uploadProgress > 0 && uploadProgress < 100" class="progress-bar">
+              <div class="progress" [style.width.%]="uploadProgress"></div>
+            </div>
+            <p *ngIf="uploadError" class="upload-error">❌ {{ uploadError }}</p>
+            <!-- ✅ FIX #4: Only show success message if image actually uploaded -->
+            <p *ngIf="isImageUploaded && !uploadError" class="upload-success">
+              ✅ Image uploaded successfully
+            </p>
+          </div>
+          <!-- ✅ FIX #4: Only show preview if image actually uploaded -->
+          <img 
+            *ngIf="isImageUploaded && uploadedImageUrl" 
+            [src]="uploadedImageUrl" 
+            class="preview"
+            alt="Preview"
+          />
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="form-group">
+        <label>Title</label>
+        <input 
+          type="text"
+          formControlName="title"
+          placeholder="Project title"
+          class="form-control"
+        />
+        <span class="error" *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched">
+          Title required (min 3 characters)
+        </span>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label>Description</label>
+        <textarea 
+          formControlName="description"
+          placeholder="Project description"
+          class="form-control"
+          rows="4"
+        ></textarea>
+        <span class="error" *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched">
+          Description required (min 10 characters)
+        </span>
+      </div>
+
+      <!-- Live URL -->
+      <div class="form-group">
+        <label>Live URL</label>
+        <input 
+          type="url"
+          formControlName="liveUrl"
+          placeholder="https://example.com"
+          class="form-control"
+        />
+        <span class="error" *ngIf="projectForm.get('liveUrl')?.invalid && projectForm.get('liveUrl')?.touched">
+          Valid URL required
+        </span>
+      </div>
+
+      <!-- GitHub URL -->
+      <div class="form-group">
+        <label>GitHub URL</label>
+        <input 
+          type="url"
+          formControlName="githubUrl"
+          placeholder="https://github.com/..."
+          class="form-control"
+        />
+        <span class="error" *ngIf="projectForm.get('githubUrl')?.invalid && projectForm.get('githubUrl')?.touched">
+          Valid URL required
+        </span>
+      </div>
+
+      <!-- Hidden field for image URL -->
+      <input 
+        type="hidden" 
+        formControlName="thumbnailUrl" 
+      />
+
+      <!-- Submit -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-success"
+          [disabled]="!isFormValid() || isLoading"
+        >
+          {{ isLoading ? 'Saving...' : (isEditing ? 'Update Project' : 'Create Project') }}
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-secondary"
+          (click)="closeForm()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Projects List -->
+  <div class="projects-list" *ngIf="!showForm">
+    <div *ngIf="isLoading" class="loading">Loading projects...</div>
+    
+    <div *ngIf="!isLoading && projects.length === 0" class="empty-state">
+      <p>No projects yet. Create your first project!</p>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card" *ngFor="let project of projects">
+        <img 
+          *ngIf="project.thumbnailUrl"
+          [src]="project.thumbnailUrl" 
+          alt="{{ project.title }}"
+          class="project-thumbnail"
+        />
+        <div class="project-info">
+          <h3>{{ project.title }}</h3>
+          <p class="description">{{ project.description }}</p>
+          <div class="project-links">
+            <!-- ✅ FIX #3: Use [attr.href] for external links -->
+            <a 
+              [attr.href]="project.liveUrl" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="link"
+              (click)="$event.stopPropagation()"
+            >
+              🌐 Live
+            </a>
+            <!-- ✅ FIX #3: Use [attr.href] for external links -->
+            <a 
+              [attr.href]="project.githubUrl" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="link"
+              (click)="$event.stopPropagation()"
+            >
+              💻 GitHub
+            </a>
+          </div>
+        </div>
+        <div class="project-actions">
+          <button 
+            class="btn btn-sm btn-info"
+            (click)="openEditForm(project)"
+          >
+            <i class="bi bi-pencil"></i> Edit
+          </button>
+          <button 
+            class="btn btn-sm btn-danger"
+            (click)="deleteProject(project.id)"
+          >
+            <i class="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

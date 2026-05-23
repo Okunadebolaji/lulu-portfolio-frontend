@@ -1,0 +1,858 @@
+@use "sass:color";
+// Project Manager Component Styles
+// Admin panel for managing portfolio projects
+
+// ==================== VARIABLES ====================
+
+$primary-color: #6366f1;      // Indigo
+$primary-dark: #4f46e5;       // Darker indigo
+$primary-light: #818cf8;      // Lighter indigo
+$success-color: #10b981;      // Green
+$danger-color: #ef4444;       // Red
+$warning-color: #f59e0b;      // Amber
+$info-color: #3b82f6;         // Blue
+$text-dark: #1f2937;          // Dark gray
+$text-light: #6b7280;         // Light gray
+$bg-light: #f9fafb;           // Very light gray
+$bg-white: #ffffff;           // White
+$border-color: #e5e7eb;       // Light border
+$shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+// ==================== MIXINS ====================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button-base {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin input-base {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid $border-color;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  &:disabled {
+    background-color: $bg-light;
+    cursor: not-allowed;
+  }
+}
+
+// ==================== CONTAINER ====================
+
+.project-manager-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: $bg-light;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  color: $text-dark;
+}
+
+// ==================== HEADER ====================
+
+.manager-header {
+  @include flex-between;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid $border-color;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  .btn-primary {
+    @include button-base;
+    background-color: $primary-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-dark;
+    }
+  }
+}
+
+// ==================== ALERTS ====================
+
+.alert {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+
+  &.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border-left: 4px solid $success-color;
+  }
+
+  &.alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid $danger-color;
+  }
+
+  &.alert-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid $warning-color;
+  }
+
+  &.alert-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border-left: 4px solid $info-color;
+  }
+}
+
+// ==================== FORM SECTION ====================
+
+.form-section {
+  background-color: $bg-white;
+  border-radius: 0.75rem;
+  box-shadow: $shadow-lg;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+
+  .form-header {
+    @include flex-between;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: white;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      @include button-base;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  form {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+// ==================== FORM GROUP ====================
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 600;
+    color: $text-dark;
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea,
+  select {
+    @include input-base;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .error {
+    font-size: 0.85rem;
+    color: $danger-color;
+    font-weight: 500;
+  }
+}
+
+// ==================== IMAGE UPLOAD ====================
+
+.upload-box {
+  border: 3px dashed $primary-color;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(129, 140, 248, 0.05));
+  position: relative;
+
+  &:hover {
+    border-color: $primary-dark;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(129, 140, 248, 0.1));
+  }
+
+  .hidden-input {
+    display: none;
+  }
+
+  .choose-file-btn {
+    @include button-base;
+    background-color: $primary-color;
+    color: white;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      background-color: $primary-dark;
+      transform: translateY(-2px);
+    }
+  }
+
+  .upload-hint {
+    font-size: 0.9rem;
+    color: $text-light;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .upload-status {
+    margin: 1rem 0;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: $border-color;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, $primary-color, $primary-light);
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+  }
+
+  .upload-error {
+    color: $danger-color;
+    font-weight: 600;
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+  }
+
+  .upload-success {
+    color: $success-color;
+    font-weight: 600;
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+  }
+
+  .preview {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    box-shadow: $shadow-lg;
+    animation: fadeIn 0.3s ease;
+    border: 2px solid $border-color;
+  }
+}
+
+// ==================== FORM ACTIONS ====================
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+
+  .btn {
+    @include button-base;
+
+    &.btn-success {
+      background-color: $success-color;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: color.adjust($success-color, $lightness: -10%)
+      }
+    }
+
+    &.btn-secondary {
+      background-color: #9ca3af;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #6b7280;
+      }
+    }
+  }
+}
+
+// ==================== PROJECTS LIST ====================
+
+.projects-list {
+  padding: 1rem 0;
+
+  .loading {
+    @include flex-center;
+    padding: 3rem;
+    font-size: 1.1rem;
+    color: $text-light;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: $bg-white;
+    border-radius: 0.75rem;
+    box-shadow: $shadow;
+
+    p {
+      font-size: 1.1rem;
+      color: $text-light;
+      margin: 0;
+    }
+  }
+}
+
+// ==================== PROJECTS GRID ====================
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ==================== PROJECT CARD ====================
+
+.project-card {
+  background-color: $bg-white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: $shadow;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeIn 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  .project-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: $bg-light;
+  }
+
+  .project-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-dark;
+      line-height: 1.4;
+    }
+
+    .description {
+      margin: 0;
+      color: $text-light;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      // -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+
+      .link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: $bg-light;
+        color: $primary-color;
+        text-decoration: none;
+        border-radius: 0.375rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: $primary-color;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .project-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background-color: $bg-light;
+    border-top: 1px solid $border-color;
+
+    .btn {
+      @include button-base;
+      flex: 1;
+      padding: 0.65rem 1rem;
+      font-size: 0.9rem;
+
+      &.btn-sm {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      &.btn-info {
+        background-color: $info-color;
+        color: white;
+
+        &:hover:not(:disabled) {
+          background-color: color.adjust($info-color, $lightness: -10%);
+        }
+      }
+
+      &.btn-danger {
+        background-color: $danger-color;
+        color: white;
+
+        &:hover:not(:disabled) {
+          background-color: color.adjust($danger-color, $lightness: -10%);
+        }
+      }
+    }
+  }
+}
+
+// ==================== BUTTONS ====================
+
+.btn {
+  @include button-base;
+
+  &.btn-primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-dark;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #9ca3af;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: #6b7280;
+    }
+  }
+
+  &.btn-success {
+    background-color: $success-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($success-color, $lightness: -10%)
+  }
+
+  &.btn-danger {
+    background-color: $danger-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($danger-color, $lightness: -10%);
+    }
+  }
+
+  &.btn-info {
+    background-color: $info-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($info-color, $lightness: -10%);
+    }
+  }
+}
+
+// ==================== ANIMATIONS ====================
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ==================== RESPONSIVE ====================
+
+@media (max-width: 1024px) {
+  .project-manager-container {
+    padding: 1.5rem;
+  }
+
+  .manager-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .form-section {
+    form {
+      padding: 1.5rem;
+    }
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-manager-container {
+    padding: 1rem;
+  }
+
+  .manager-header {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .form-section {
+    .form-header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .btn-secondary {
+        width: 100%;
+      }
+    }
+
+    form {
+      padding: 1.5rem;
+      gap: 1.25rem;
+    }
+  }
+
+  .upload-box {
+    padding: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .project-card {
+    .project-info {
+      padding: 1rem;
+    }
+
+    .project-actions {
+      padding: 0.75rem 1rem;
+      gap: 0.25rem;
+
+      .btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .project-manager-container {
+    padding: 0.75rem;
+  }
+
+  .manager-header {
+    margin-bottom: 1rem;
+
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    .btn-primary {
+      padding: 0.65rem 1.25rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  .alert {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .form-section {
+    .form-header {
+      padding: 1rem;
+
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      .btn-secondary {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    form {
+      padding: 1rem;
+      gap: 1rem;
+    }
+  }
+
+  .upload-box {
+    padding: 1rem;
+  }
+
+  .project-thumbnail {
+    height: 150px;
+  }
+
+  .project-card {
+    .project-actions {
+      .btn {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+// ==================== ACCESSIBILITY ====================
+
+// Focus states for keyboard navigation
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: more) {
+  .btn,
+  input,
+  textarea {
+    border-width: 2px;
+  }
+
+  .project-card {
+    box-shadow: 0 0 0 2px $border-color;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .project-manager-container {
+    background-color: #111827;
+    color: #f3f4f6;
+  }
+
+  .manager-header {
+    border-bottom-color: #374151;
+
+    h1 {
+      color: #f3f4f6;
+    }
+  }
+
+  .form-section {
+    background-color: #1f2937;
+
+    .form-header {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+    }
+
+    form {
+      background-color: #1f2937;
+    }
+  }
+
+  .form-group label {
+    color: #f3f4f6;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+
+    &:focus {
+      border-color: $primary-color;
+    }
+  }
+
+  .upload-box {
+    background-color: #374151;
+    border-color: #4b5563;
+
+    &:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+  }
+
+  .project-card {
+    background-color: #1f2937;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    .project-info h3 {
+      color: #f3f4f6;
+    }
+
+    .project-info .description {
+      color: #d1d5db;
+    }
+
+    .project-actions {
+      background-color: #374151;
+      border-top-color: #4b5563;
+
+      .link {
+        background-color: #4b5563;
+        color: #818cf8;
+      }
+    }
+  }
+
+  .empty-state {
+    background-color: #1f2937;
+  }
+}
+}

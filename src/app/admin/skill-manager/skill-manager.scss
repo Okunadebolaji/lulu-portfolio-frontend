@@ -1,0 +1,1371 @@
+@use 'sass:color';
+@use '../../../styles/design-system' as *;
+
+// ============================================================================
+// SKILL MANAGER COMPONENT STYLES
+// ============================================================================
+
+.skill-manager {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $space-xl;
+  background: $bg-primary;
+  min-height: 100vh;
+
+  @include respond-to('sm') {
+    padding: $space-lg;
+  }
+
+  @include respond-to('xs') {
+    padding: $space-md;
+  }
+}
+
+// ============================================================================
+// MANAGER HEADER
+// ============================================================================
+
+.manager-header {
+  margin-bottom: $space-3xl;
+  padding-bottom: $space-2xl;
+  border-bottom: 1px solid $outline-variant;
+}
+
+.header-content {
+  @include flex-between;
+  align-items: flex-start;
+  gap: $space-lg;
+  flex-wrap: wrap;
+
+  h1 {
+    margin: 0 0 $space-md 0;
+    color: $text-primary;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin: $space-sm 0 0 0;
+    color: $text-secondary;
+  }
+
+  .btn {
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================================
+// ALERT MESSAGES
+// ============================================================================
+
+.alert {
+  @include flex-between;
+  gap: $space-lg;
+  
+  padding: $space-lg;
+  margin-bottom: $space-lg;
+  border-radius: $radius-lg;
+  border: 1px solid;
+  animation: slideInDown 0.4s ease-out;
+
+  .alert-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .alert-content {
+    flex: 1;
+  }
+
+  .alert-title {
+    margin: 0 0 $space-xs 0;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .alert-message {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .alert-close {
+    @include button-reset;
+    font-size: 24px;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity $transition-fast;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    @include flex-center;
+    flex-shrink: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.alert-error {
+    background: #fef2f0;
+    border-color: #f5c2c7;
+    color: #8b2e1f;
+  }
+
+  &.alert-success {
+    background: #f0f9f7;
+    border-color: #c2e9e2;
+    color: #0f5c47;
+  }
+
+  &.alert-warning {
+    background: #fffbf0;
+    border-color: #ffe9c6;
+    color: #664d03;
+  }
+}
+
+// ============================================================================
+// FORM SECTION
+// ============================================================================
+
+.form-section {
+  background: $surface-container-lowest;
+  border: 1px solid $outline-variant;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  margin-bottom: $space-3xl;
+  animation: scaleIn 0.3s ease-out;
+
+  @include respond-to('xs') {
+    padding: $space-lg;
+  }
+}
+
+.form-header {
+  @include flex-between;
+  align-items: center;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $outline-variant;
+
+  h2 {
+    margin: 0;
+    color: $text-primary;
+  }
+
+  .btn-close {
+    @include button-reset;
+    font-size: 28px;
+    color: $text-secondary;
+    width: 32px;
+    height: 32px;
+    @include flex-center;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+}
+
+.skill-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+  }
+
+  @include respond-to('xs') {
+    gap: $space-lg;
+  }
+}
+
+.form-group {
+  display: grid;
+  gap: $space-md;
+
+  &:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  &:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    color: $text-secondary;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+
+    .proficiency-value {
+      font-weight: 700;
+      color: $primary;
+      margin-left: auto;
+    }
+  }
+}
+
+.form-input,
+.form-textarea {
+  padding: $space-lg;
+  border: 1px solid $outline-variant;
+  border-radius: $radius-md;
+  font-family: $font-family-base;
+  font-size: 14px;
+  color: $text-primary;
+  background: $surface-container-lowest;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+
+  &:disabled {
+    background: $surface-container;
+    color: $text-muted;
+    cursor: not-allowed;
+  }
+
+  &.error {
+    border-color: $error;
+    box-shadow: 0 0 0 3px rgba($error, 0.1);
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: $font-family-base;
+}
+
+.form-range {
+  width: 100%;
+  height: 6px;
+  border-radius: $radius-full;
+  background: $surface-container;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: $radius-full;
+    background: $primary;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: all $transition-fast;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: $radius-full;
+    background: $primary;
+    cursor: pointer;
+    border: none;
+    box-shadow: $shadow-md;
+    transition: all $transition-fast;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: $shadow-lg;
+    }
+  }
+}
+
+.proficiency-labels {
+  @include flex-between;
+  font-size: 12px;
+  color: $text-secondary;
+}
+
+.proficiency-label {
+  margin: $space-sm 0 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: $primary;
+}
+
+.error-text {
+  margin: 0;
+  font-size: 12px;
+  color: $error;
+  font-weight: 500;
+}
+
+.help-text {
+  margin: 0;
+  font-size: 12px;
+  color: $text-secondary;
+  text-align: right;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  @include flex-between;
+  gap: $space-lg;
+  padding-top: $space-xl;
+  border-top: 1px solid $outline-variant;
+  margin-top: $space-lg;
+
+  @include respond-to('xs') {
+    flex-direction: column-reverse;
+  }
+
+  .btn {
+    flex: 1;
+
+    @include respond-to('xs') {
+      width: 100%;
+    }
+  }
+}
+
+// ============================================================================
+// FILTER SECTION
+// ============================================================================
+
+.filter-section {
+  margin-bottom: $space-xl;
+}
+
+.filter-controls {
+  @include flex-center;
+  gap: $space-lg;
+  flex-wrap: wrap;
+  margin-bottom: $space-lg;
+
+  @include respond-to('xs') {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-group {
+    @include flex-center;
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+
+    @include respond-to('xs') {
+      flex: 1;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: $space-lg;
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding-left: 40px;
+      border-radius: $radius-md;
+      border: 1px solid $outline-variant;
+      padding: $space-lg 40px $space-lg $space-lg;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+
+    .btn-clear {
+      @include button-reset;
+      position: absolute;
+      right: $space-lg;
+      font-size: 20px;
+      color: $text-secondary;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+  }
+
+  .filter-select {
+    padding: $space-lg;
+    border: 1px solid $outline-variant;
+    border-radius: $radius-md;
+    background: $surface-container-lowest;
+    font-size: 14px;
+    color: $text-primary;
+    cursor: pointer;
+    transition: all $transition-base;
+    min-width: 200px;
+
+    @include respond-to('xs') {
+      width: 100%;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    }
+  }
+
+  .btn {
+    flex-shrink: 0;
+
+    @include respond-to('xs') {
+      width: 100%;
+    }
+  }
+}
+
+.filter-info {
+  padding: $space-md $space-lg;
+  background: $surface-container;
+  border-radius: $radius-md;
+  text-align: right;
+
+  @include respond-to('xs') {
+    text-align: center;
+  }
+}
+
+// ============================================================================
+// LOADING STATE
+// ============================================================================
+
+.loading-container {
+  @include flex-col-center;
+  gap: $space-lg;
+  padding: $space-3xl $space-xl;
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid $surface-container;
+  border-top-color: $primary;
+  border-radius: $radius-full;
+  animation: spin 1s linear infinite;
+}
+
+// ============================================================================
+// SKILLS GRID
+// ============================================================================
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $space-xl;
+  margin-bottom: $space-3xl;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $space-lg;
+  }
+
+  @include respond-to('xs') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skill-card {
+  @include card;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid $outline-variant;
+  border-left: 4px solid $primary;
+  background: $surface-container-lowest;
+  
+  animation: fadeInUp 0.4s ease-out;
+  transition: all $transition-base;
+
+  &:hover {
+    border-left-color: $primary;
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+}
+
+.card-header {
+  @include flex-between;
+  gap: $space-lg;
+  padding: $space-lg;
+  border-bottom: 1px solid $outline-variant;
+  background: $surface-container;
+
+  .card-title {
+    flex: 1;
+    display: grid;
+    gap: $space-xs;
+
+    h3 {
+      margin: 0;
+      color: $text-primary;
+      font-size: 16px;
+      font-weight: 600;
+      @include text-truncate;
+    }
+
+    .category-label {
+      display: inline-block;
+      padding: $space-xs $space-sm;
+      background: $primary-fixed;
+      color: $primary;
+      border-radius: $radius-xs;
+      font-size: 11px;
+      font-weight: 600;
+      width: fit-content;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  .card-menu {
+    @include flex-center;
+    gap: $space-sm;
+    flex-shrink: 0;
+
+    .btn-action {
+      @include button-reset;
+      width: 32px;
+      height: 32px;
+      @include flex-center;
+      border-radius: $radius-sm;
+      font-size: 14px;
+      transition: all $transition-fast;
+
+      &:hover {
+        background: rgba($primary, 0.1);
+      }
+
+      &.btn-delete:hover {
+        background: rgba($error, 0.1);
+      }
+    }
+  }
+}
+
+.card-body {
+  padding: $space-lg;
+  display: grid;
+  gap: $space-lg;
+}
+
+.skill-description {
+  margin: 0;
+  color: $text-secondary;
+  font-size: 14px;
+  line-height: 1.6;
+  @include text-clamp(2);
+}
+
+// ============================================================================
+// PROFICIENCY SECTION
+// ============================================================================
+
+.proficiency-section {
+  display: grid;
+  gap: $space-md;
+}
+
+.proficiency-header {
+  @include flex-between;
+  align-items: center;
+
+  .label-caps {
+    color: $text-secondary;
+    font-size: 11px;
+  }
+
+  .proficiency-value {
+    font-weight: 700;
+    color: $primary;
+    font-size: 14px;
+  }
+}
+
+.proficiency-bar {
+  height: 8px;
+  background: $surface-container;
+  border-radius: $radius-full;
+  overflow: hidden;
+}
+
+.proficiency-fill {
+  height: 100%;
+  border-radius: $radius-full;
+  transition: width $transition-base;
+
+  &.proficiency-expert {
+    background: $success;
+  }
+
+  &.proficiency-advanced {
+    background: $primary;
+  }
+
+  &.proficiency-intermediate {
+    background: #ff9800;
+  }
+
+  &.proficiency-beginner {
+    background: #2196f3;
+  }
+
+  &.proficiency-learning {
+    background: $text-secondary;
+  }
+}
+
+.proficiency-label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+// ============================================================================
+// EMPTY STATE
+// ============================================================================
+
+.empty-state {
+  @include flex-col-center;
+  gap: $space-lg;
+  padding: $space-3xl $space-xl;
+  text-align: center;
+  background: $surface-container-lowest;
+  border: 2px dashed $outline-variant;
+  border-radius: $radius-lg;
+  margin-bottom: $space-3xl;
+
+  .empty-icon {
+    font-size: 64px;
+  }
+
+  h3 {
+    margin: 0;
+    color: $text-primary;
+  }
+
+  p {
+    margin: 0;
+    max-width: 400px;
+  }
+
+  .empty-actions {
+    @include flex-center;
+    gap: $space-lg;
+    flex-wrap: wrap;
+    margin-top: $space-lg;
+
+    @include respond-to('xs') {
+      flex-direction: column;
+      width: 100%;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// PAGINATION
+// ============================================================================
+
+.pagination-section {
+  padding-top: $space-xl;
+  border-top: 1px solid $outline-variant;
+}
+
+.pagination-container {
+  @include flex-center;
+  gap: $space-lg;
+  flex-wrap: wrap;
+  margin-bottom: $space-lg;
+
+  @include respond-to('xs') {
+    flex-direction: column;
+    gap: $space-md;
+  }
+}
+
+.pagination-btn {
+  @include flex-center;
+  gap: $space-sm;
+  
+  padding: $space-md $space-lg;
+  border: 1px solid $outline-variant;
+  border-radius: $radius-md;
+  background: $surface-container-lowest;
+  color: $text-primary;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover:not(:disabled) {
+    border-color: $primary;
+    color: $primary;
+    background: $primary-fixed;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .arrow {
+    display: inline-block;
+    transition: transform $transition-fast;
+    font-size: 16px;
+  }
+
+  &:hover:not(:disabled) .arrow {
+    transform: translateX(4px);
+  }
+
+  &.btn-prev:hover:not(:disabled) .arrow {
+    transform: translateX(-4px);
+  }
+}
+
+.page-numbers {
+  @include flex-center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  @include flex-center;
+  min-width: 40px;
+  height: 40px;
+  
+  border: 1px solid $outline-variant;
+  border-radius: $radius-sm;
+  background: $surface-container-lowest;
+  color: $text-secondary;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+
+  &.active {
+    background: $primary;
+    color: $on-primary;
+    border-color: $primary;
+  }
+}
+
+.pagination-info {
+  text-align: center;
+  flex-basis: 100%;
+}
+
+// ============================================================================
+// BUTTON COMPONENTS - FIXED WITH color.adjust()
+// ============================================================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  
+  padding: $space-md $space-lg;
+  border-radius: $radius-md;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all $transition-base;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &.btn-primary {
+    background: $primary;
+    color: $on-primary;
+    box-shadow: $shadow-sm;
+
+    &:hover:not(:disabled) {
+      // Using color.adjust() instead of darken()
+      background: color.adjust($primary, $lightness: -5%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &.btn-secondary {
+    background: $surface-container;
+    color: $text-primary;
+    border: 1px solid $outline-variant;
+
+    &:hover:not(:disabled) {
+      background: $surface-container-high;
+      border-color: $primary;
+      color: $primary;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// ============================================================================
+// SKILLS TABLE STYLES (fix alignment)
+// ============================================================================
+
+.skills-table-wrapper {
+  overflow-x: auto;
+  border-radius: $radius-md;
+  border: 1px solid $outline-variant;
+  margin-bottom: $space-xl;
+}
+
+.skills-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: $surface-container-lowest;
+
+  th, td {
+    padding: $space-lg;
+    text-align: left;
+    border-bottom: 1px solid $outline-variant;
+  }
+
+  th {
+    background: $surface-container;
+    color: $text-secondary;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  td {
+    vertical-align: middle;
+    color: $text-primary;
+  }
+
+  .category-badge {
+    display: inline-block;
+    padding: $space-xs $space-sm;
+    background: $primary-fixed;
+    color: $primary;
+    border-radius: $radius-xs;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .proficiency-bar {
+    width: 100px;
+    height: 6px;
+    background: $surface-container;
+    border-radius: $radius-full;
+    overflow: hidden;
+    display: inline-block;
+    margin-right: $space-sm;
+  }
+
+  .proficiency-fill {
+    height: 100%;
+    background: $primary;
+    border-radius: $radius-full;
+  }
+
+  .actions {
+    white-space: nowrap;
+
+    button {
+      @include button-reset;
+      margin-right: $space-sm;
+      padding: $space-sm $space-md;
+      border-radius: $radius-sm;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.btn-edit {
+        background: $primary-fixed;
+        color: $primary;
+        &:hover { 
+          background: color.adjust($primary, $lightness: -10%);
+          color: white; 
+        }
+      }
+
+      &.btn-delete {
+        background: #ffebee;
+        color: $error;
+        &:hover { 
+          background: color.adjust($error, $lightness: -10%);
+          color: white; 
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SECTION HEADER WITH ADD BUTTON
+// ============================================================================
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-lg;
+  border-bottom: 2px solid $outline-variant;
+  flex-wrap: wrap;
+  gap: $space-lg;
+
+  h2 {
+    margin: 0;
+    color: $text-primary;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  .btn-add-skill {
+    @include button-reset;
+    background: $primary;
+    color: white;
+    padding: $space-md $space-lg;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+
+    &:hover:not(:disabled) {
+      // Using color.adjust() instead of darken()
+      background: color.adjust($primary, $lightness: -10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @include respond-to('sm') {
+    flex-direction: column;
+
+    .btn-add-skill {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// ============================================================================
+// MODAL STYLES
+// ============================================================================
+
+.form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-md;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: $radius-lg;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @include respond-to('sm') {
+    max-width: 100%;
+    border-radius: $radius-md;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-lg $space-xl;
+  border-bottom: 1px solid $outline-variant;
+  position: sticky;
+  top: 0;
+  background: white;
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  .btn-close {
+    @include button-reset;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 20px;
+
+    &:hover {
+      background: $surface-container;
+      color: $text-primary;
+    }
+  }
+}
+
+// ============================================================================
+// FORM STYLES
+// ============================================================================
+
+.skill-form {
+  padding: $space-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  label {
+    font-weight: 600;
+    font-size: 14px;
+    color: $text-primary;
+  }
+
+  .form-input {
+    padding: $space-md;
+    border: 1px solid $outline;
+    border-radius: $radius-sm;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    }
+
+    &:invalid {
+      border-color: $error;
+    }
+  }
+
+  .form-range {
+    width: 100%;
+    height: 6px;
+    border-radius: $radius-full;
+    background: $surface-container;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $primary;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 0 0 8px rgba($primary, 0.2);
+      }
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $primary;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 0 0 8px rgba($primary, 0.2);
+      }
+    }
+  }
+
+  .percentage-input-group {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+
+    .form-range {
+      flex: 1;
+    }
+
+    .form-input-number {
+      width: 70px;
+      padding: $space-sm $space-md;
+      border: 1px solid $outline;
+      border-radius: $radius-sm;
+      font-size: 14px;
+      text-align: center;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+  }
+
+  .error-text {
+    color: $error;
+    font-size: 12px;
+    margin-top: -$space-xs;
+  }
+}
+
+// ============================================================================
+// ALERTS
+// ============================================================================
+
+.alert {
+  padding: $space-md $space-lg;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  margin-bottom: $space-md;
+  animation: slideDown 0.3s ease;
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &.alert-error {
+    background: #ffebee;
+    color: $error;
+    border-left: 4px solid $error;
+  }
+
+  &.alert-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #2e7d32;
+  }
+}
+
+// ============================================================================
+// FORM ACTIONS
+// ============================================================================
+
+.form-actions {
+  display: flex;
+  gap: $space-md;
+  justify-content: flex-end;
+  padding-top: $space-md;
+  border-top: 1px solid $outline-variant;
+
+  button {
+    @include button-reset;
+    padding: $space-md $space-lg;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+
+    &.btn-cancel {
+      background: $surface-container;
+      color: $text-primary;
+
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+
+    &.btn-submit {
+      background: $primary;
+      color: white;
+
+      &:hover:not(:disabled) {
+        // Using color.adjust() instead of darken()
+        background: color.adjust($primary, $lightness: -10%);
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include respond-to('sm') {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
+@include respond-to('xs') {
+  .skill-manager {
+    padding: $space-lg;
+  }
+
+  .section-header {
+    flex-direction: column;
+
+    .btn-add-skill {
+      width: 100%;
+    }
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: $space-lg;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .form-section {
+    padding: $space-lg;
+  }
+
+  .filter-controls {
+    .search-group {
+      width: 100%;
+    }
+  }
+
+  .card-header {
+    .card-title h3 {
+      font-size: 14px;
+    }
+
+    .card-menu {
+      .btn-action {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .modal-content {
+    padding: $space-md;
+  }
+}

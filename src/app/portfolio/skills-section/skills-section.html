@@ -1,0 +1,111 @@
+<!-- 🎨 SKILLS SECTION -->
+<section class="skills-section">
+  <div class="container">
+    <!-- HEADER -->
+    <div class="section-header">
+      <h2 class="section-title">My Skills</h2>
+      <p class="section-subtitle">
+        Crafted through years of experience in design and development
+      </p>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading skills...</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div *ngIf="error && !loading" class="error-state">
+      <p>{{ error }}</p>
+      <button (click)="loadSkills()" class="retry-btn">Retry</button>
+    </div>
+
+    <!-- SKILLS CONTENT -->
+    <ng-container *ngIf="!loading && !error && allSkills.length > 0">
+      <!-- STATISTICS CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">{{ totalSkills }}</span>
+          <span class="stat-label">Total Skills</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{{ averageProficiency }}%</span>
+          <span class="stat-label">Avg Proficiency</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">{{ categories.length }}</span>
+          <span class="stat-label">Categories</span>
+        </div>
+      </div>
+
+      <!-- CATEGORY FILTER -->
+      <div class="category-filter">
+        <h3>Filter by Category</h3>
+        <div class="filter-buttons">
+          <button
+            *ngFor="let category of categories"
+            [class.active]="isCategorySelected(category)"
+            (click)="filterByCategory(category)"
+            class="filter-btn"
+          >
+            {{ category }}
+          </button>
+        </div>
+      </div>
+
+      <!-- SKILLS BY CATEGORY -->
+      <div class="skills-grid">
+        <div
+          *ngFor="let category of getFilteredSkills(); trackBy: trackByCategoryName"
+          class="category-group"
+        >
+          <!-- CATEGORY HEADER -->
+          <div class="category-header">
+            <h3>{{ category.name }}</h3>
+            <span class="category-badge">
+              {{ category.skills.length }} skills · Avg: {{ category.averagePercentage }}%
+            </span>
+          </div>
+
+          <!-- SKILLS IN CATEGORY -->
+          <div class="skills-list">
+            <div
+              *ngFor="let skill of category.skills; trackBy: trackBySkillId"
+              class="skill-item"
+            >
+              <!-- SKILL NAME & PERCENTAGE -->
+              <div class="skill-header">
+                <div class="skill-info">
+                  <span class="skill-name">{{ skill.name }}</span>
+                  <span class="skill-proficiency">
+                    {{ getProficiencyLabel(skill.percentage) }}
+                  </span>
+                </div>
+                <span class="skill-percentage">{{ skill.percentage }}%</span>
+              </div>
+
+              <!-- PROGRESS BAR -->
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar"
+                  [style.width.%]="skill.percentage"
+                  [style.background-color]="getColorByProficiency(skill.percentage)"
+                  [attr.aria-valuenow]="skill.percentage"
+                  [attr.aria-valuemin]="0"
+                  [attr.aria-valuemax]="100"
+                  role="progressbar"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- EMPTY STATE -->
+    <div *ngIf="!loading && !error && allSkills.length === 0" class="empty-state">
+      <p>No skills added yet. Check back soon!</p>
+    </div>
+  </div>
+</section>

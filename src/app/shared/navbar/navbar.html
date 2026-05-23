@@ -1,0 +1,74 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo/Brand -->
+    <div class="navbar-brand">
+      
+        <span class="logo-icon"></span>
+        <span class="logo-text">Lois Ajani</span>
+    
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button 
+      class="mobile-toggle"
+      (click)="toggleMobileMenu()"
+      [class.active]="mobileMenuOpen"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <ul class="nav-links" [class.active]="mobileMenuOpen">
+      <li><a routerLink="/home" routerLinkActive="active" (click)="mobileMenuOpen = false">Home</a></li>
+      <li><a routerLink="/projects" routerLinkActive="active" (click)="mobileMenuOpen = false">Projects</a></li>
+      <li><a routerLink="/about" routerLinkActive="active" (click)="mobileMenuOpen = false">About</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active" (click)="mobileMenuOpen = false">Contact</a></li>
+    </ul>
+
+    <!-- Right Side Actions -->
+    <div class="navbar-actions">
+      <!-- Theme Toggle -->
+      <!-- <button 
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [title]="'Switch to ' + (currentTheme === 'dark' ? 'light' : 'dark') + ' mode'"
+        aria-label="Toggle theme"
+      >
+        <i [class]="'bi bi-' + getThemeIcon()"></i>
+      </button> -->
+
+      <!-- Admin Panel Link -->
+      <a 
+        *ngIf="isAuthenticated"
+        routerLink="/admin/dashboard"
+        class="admin-link"
+        title="Admin Dashboard"
+      >
+        <i class="bi bi-gear"></i> Admin
+      </a>
+
+      <!-- User Menu -->
+      <div *ngIf="isAuthenticated" class="user-menu">
+        <span class="user-name">{{ currentUser?.fullName || currentUser?.email }}</span>
+        <button 
+          (click)="logout()"
+          class="logout-btn"
+          title="Logout"
+        >
+          <i class="bi bi-door-left"></i> Logout
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <a 
+        *ngIf="!isAuthenticated"
+        routerLink="/auth/login"
+        class="login-link"
+       style="color: black;">
+         Login
+      </a>
+    </div>
+  </div>
+</nav>

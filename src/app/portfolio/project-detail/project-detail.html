@@ -1,0 +1,124 @@
+<div class="project-detail-page">
+  <!-- 🔙 BACK BUTTON -->
+  <button class="back-btn" (click)="goBack()">
+    ← Back to Projects
+  </button>
+
+  <!-- ⏳ LOADING STATE -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading project...</p>
+  </div>
+
+  <!-- ⚠️ ERROR STATE -->
+  <div *ngIf="error && !loading" class="error-state">
+    <h2>❌ {{ error }}</h2>
+    <button class="retry-btn" (click)="loadProject()">Try Again</button>
+  </div>
+
+  <!-- ✅ PROJECT LOADED -->
+  <div *ngIf="project && !loading && !error" class="project-container">
+    
+    <!-- HERO SECTION -->
+    <section class="project-hero">
+      <img 
+        [src]="project.thumbnailUrl" 
+        [alt]="project.title"
+        class="project-image"
+      />
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="project-content">
+      <div class="content-wrapper">
+        
+        <!-- TITLE & META -->
+        <div class="header-section">
+          <h1 class="project-title">{{ project.title }}</h1>
+          <p class="project-date">
+            Created: {{ project.createdDate | date: 'MMM dd, yyyy' }}
+          </p>
+          
+          <!-- FEATURED BADGE --> 
+          <div *ngIf="project.isFeatured" class="featured-badge">
+              <i class="bi bi-star"></i> Featured Project
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="description-section">
+          <h2>About This Project</h2>
+          <p class="description-text">{{ project.description }}</p>
+        </div>
+
+        <!-- TECHNOLOGIES (if available) -->
+        <div *ngIf="project.technologies && project.technologies.length > 0" class="tech-section">
+          <h2>Technologies Used</h2>
+          <div class="tech-tags">
+            <span *ngFor="let tech of project.technologies" class="tech-tag">
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+
+        <!-- CASE STUDY CONTENT (if available) -->
+        <div *ngIf="project.content" class="content-section">
+          <h2>Case Study</h2>
+          <div class="case-study-content" [innerHTML]="project.content"></div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons">
+          <button 
+            *ngIf="project.liveUrl" 
+            class="btn btn-primary"
+            (click)="openLive()"
+          >
+              <i class="bi bi-globe"></i> View Live Project
+          </button>
+
+          <button 
+            *ngIf="project.githubUrl" 
+            class="btn btn-secondary"
+            (click)="openGithub()"
+          >
+              <i class="bi bi-laptop"></i> View on GitHub
+          </button>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR (Optional) -->
+      <aside class="sidebar">
+        <div class="info-card">
+          <h3>Project Info</h3>
+          
+          <div class="info-item">
+            <label>Featured</label>
+            <span *ngIf="project.isFeatured" class="badge-yes">Yes</span>
+            <span *ngIf="!project.isFeatured" class="badge-no">No</span>
+          </div>
+
+          <div class="info-item" *ngIf="project.technologies">
+            <label>Tech Stack</label>
+            <span class="tech-count">{{ project.technologies.length }} technologies</span>
+          </div>
+
+          <div class="info-item">
+            <label>Created Date</label>
+            <span>{{ project.createdDate | date: 'MMM dd, yyyy' }}</span>
+          </div>
+        </div>
+
+        <!-- SHARE LINKS -->
+        <div class="share-card">
+          <h3>Share</h3>
+          <a href="javascript:void(0)" class="share-link">
+            🔗 Copy Link
+          </a>
+        </div>
+      </aside>
+    </section>
+
+  </div>
+</div>

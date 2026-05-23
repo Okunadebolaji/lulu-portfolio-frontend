@@ -1,0 +1,41 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content" >
+    <h1 style="color: white;">Hi, I'm LOIS</h1>
+    <p class="tagline" style="color: white;">UI/UX Designer & Creative Developer</p>
+    <p class="description" style="color: white;">Crafting beautiful, functional digital experiences</p>
+    <button routerLink="/projects" class="cta-button">View My Work</button>
+  </div>
+</section>
+
+<!-- Featured Work -->
+<section class="featured">
+  <h2>Featured Work</h2>
+  <div class="projects-grid">
+   <article *ngFor="let project of featuredProjects" class="project-preview">
+  <div class="project-image">
+    <img
+      [src]="project.thumbnailUrl || 'assets/placeholder.png'"
+      [alt]="project.title"
+    />
+  </div>
+
+  <h3>{{ project.title }}</h3>
+  <p>{{ project.description }}</p>
+
+  <a [routerLink]="['/projects', project.id]" class="project-link">
+    View Case Study →
+  </a>
+</article>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<app-skills-section></app-skills-section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <h2>Let's Work Together</h2>
+  <p>Got a project in mind? Let's create something amazing.</p>
+  <a routerLink="/contact" class="cta-button">Get In Touch</a>
+</section>

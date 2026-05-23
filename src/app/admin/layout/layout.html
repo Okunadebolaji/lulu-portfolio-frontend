@@ -1,0 +1,64 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.collapsed]="!sidebarOpen">
+    <div class="sidebar-header">
+      <h3>Admin</h3>
+      <button class="toggle-btn" (click)="toggleSidebar()" title="Toggle sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item" title="Dashboard">
+        <i class="bi bi-graph-up icon"></i>
+        <span class="label">Dashboard</span>
+      </a>
+      
+      <a routerLink="/admin/projects" routerLinkActive="active" class="nav-item" title="Projects">
+        <i class="bi bi-folder icon"></i>
+        <span class="label">Projects</span>
+      </a>
+
+      <a routerLink="/admin/skills" routerLinkActive="active" class="nav-item" title="Skills">
+        <i class="bi bi-star icon"></i>
+        <span class="label">Skills</span>
+      </a>
+
+      <a routerLink="/admin/messages" routerLinkActive="active" class="nav-item" title="Messages">
+        <i class="bi bi-envelope icon"></i>
+        <span class="label">Messages</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()" title="Logout">
+        <i class="bi bi-door-left icon"></i>
+        <span class="label">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="toggle-btn" (click)="toggleSidebar()" title="Toggle sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+      
+      <div class="user-menu">
+        <span *ngIf="currentUser$ | async as user" class="user-name">
+          {{ user.fullName || user.email }}
+        </span>
+        <!-- <button (click)="logout()" class="logout-icon" title="Logout">
+          <i class="bi bi-person-circle"></i>
+        </button> -->
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,348 @@
+@use 'sass:color';
+@use '../../../../src/styles/design-system' as *;
+
+// 🎨 SKILLS SECTION - HOMEPAGE CONSISTENT STYLES
+.skills-section {
+  padding: $space-5xl 0;
+  background: #ffffff; // pure white, distinct from featured section's #f9f9f9
+  position: relative;
+
+  // Soft shadow at top to lift off the previous section
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(0, 0, 0, 0.02);
+
+  // Elegant gradient line separator (centered)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+    border-radius: 4px;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 $gutter;
+  }
+}
+
+// 📋 SECTION HEADER
+.section-header {
+  text-align: center;
+  margin-bottom: $space-3xl;
+  animation: fadeInUp 0.6s ease-out;
+
+  .section-title {
+    @include apply-font($headline-lg);
+    margin: 0 0 $space-lg 0;
+    color: $text-primary;
+  }
+
+  .section-subtitle {
+    @include apply-font($body-lg);
+    color: $text-secondary;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// 📊 STATISTICS CARDS
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $space-xl;
+  margin-bottom: $space-3xl;
+
+  .stat-card {
+    @include card;
+    text-align: center;
+    padding: $space-xl;
+    background: $surface-container-lowest;
+    border-left: 4px solid $primary;
+    transition: all $transition-base;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-left-color: $primary;
+      box-shadow: $shadow-md;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: $primary;
+      line-height: 1;
+      margin-bottom: $space-sm;
+    }
+
+    .stat-label {
+      @include apply-font($body-sm);
+      color: $text-secondary;
+      font-weight: 500;
+    }
+  }
+}
+
+// 🔍 CATEGORY FILTER
+.category-filter {
+  margin-bottom: $space-3xl;
+
+  h3 {
+    @include apply-font($label-caps);
+    color: $text-secondary;
+    margin: 0 0 $space-lg 0;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+
+  .filter-btn {
+    padding: $space-sm $space-lg;
+    border: 1px solid $outline-variant;
+    background: $surface-container-lowest;
+    border-radius: $radius-full;
+    @include apply-font($body-sm);
+    font-weight: 500;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+      background: $primary-fixed;
+    }
+
+    &.active {
+      background: $primary;
+      border-color: $primary;
+      color: $on-primary;
+    }
+  }
+}
+
+// 🎯 SKILLS GRID
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $space-2xl;
+}
+
+// 📂 CATEGORY GROUP
+.category-group {
+  background: $surface-container-lowest;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $outline-variant;
+  padding: $space-xl;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+    border-color: $primary;
+  }
+
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    margin-bottom: $space-xl;
+    padding-bottom: $space-lg;
+    border-bottom: 2px solid $outline-variant;
+
+    h3 {
+      @include apply-font($headline-md);
+      margin: 0;
+      color: $text-primary;
+    }
+
+    .category-badge {
+      @include apply-font($label-caps-sm);
+      background: $primary-fixed;
+      color: $primary;
+      padding: $space-xs $space-md;
+      border-radius: $radius-full;
+      white-space: nowrap;
+    }
+  }
+}
+
+// 📋 SKILLS LIST
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+// 🎯 INDIVIDUAL SKILL ITEM
+.skill-item {
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: $space-sm;
+    flex-wrap: wrap;
+    gap: $space-sm;
+
+    .skill-info {
+      display: flex;
+      flex-direction: column;
+      gap: $space-xs;
+    }
+
+    .skill-name {
+      @include apply-font($body-md);
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    .skill-proficiency {
+      @include apply-font($body-sm);
+      color: $text-secondary;
+    }
+
+    .skill-percentage {
+      @include apply-font($body-md);
+      font-weight: 700;
+      color: $primary;
+    }
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background: $surface-container;
+    border-radius: $radius-full;
+    overflow: hidden;
+
+    .progress-bar {
+      height: 100%;
+      border-radius: $radius-full;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+}
+
+// ⏳ LOADING STATE
+.loading-state {
+  text-align: center;
+  padding: $space-3xl;
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid $outline-variant;
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto $space-lg;
+  }
+
+  p {
+    @include apply-font($body-md);
+    color: $text-secondary;
+  }
+}
+
+// ❌ ERROR STATE
+.error-state {
+  background: $error-container;
+  border: 1px solid $error;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  text-align: center;
+  margin: $space-xl 0;
+
+  p {
+    color: $on-error-container;
+    margin-bottom: $space-lg;
+  }
+
+  .retry-btn {
+    @include button-reset;
+    @include apply-font($label-caps);
+    background: $error;
+    color: $on-error;
+    padding: $space-sm $space-xl;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: color.adjust($error, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// 🎪 EMPTY STATE
+.empty-state {
+  text-align: center;
+  padding: $space-3xl;
+  background: $surface-container-low;
+  border-radius: $radius-lg;
+  border: 1px dashed $outline-variant;
+
+  p {
+    @include apply-font($body-lg);
+    color: $text-secondary;
+  }
+}
+
+// 📱 RESPONSIVE
+@include respond-to('md') {
+  .skills-section {
+    padding: $space-3xl 0;
+  }
+
+  .stats-grid {
+    gap: $space-lg;
+  }
+
+  .skills-grid {
+    gap: $space-xl;
+  }
+
+  .category-group {
+    padding: $space-lg;
+  }
+}
+
+@include respond-to('xs') {
+  .skills-section .container {
+    padding: 0 $space-lg;
+  }
+
+  .category-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+// Keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

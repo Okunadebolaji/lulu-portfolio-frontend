@@ -1,0 +1,28 @@
+<section class="projects-page">
+
+  <div class="projects-header">
+    <h1>Selected Work</h1>
+
+    <p>
+      A collection of UI/UX design projects and creative case studies.
+    </p>
+  </div>
+
+
+  <!-- PROJECT GRID -->
+  <div class="projects-grid">
+    <app-project-card
+      *ngFor="let project of projects"
+      [project]="project"
+      (projectClick)="onProjectClick($event)"
+      (liveClick)="onLiveClick($event)"
+      (githubClick)="onGithubClick($event)"
+    ></app-project-card>
+  </div>
+
+  <!-- NO PROJECTS STATE -->
+  <div *ngIf="projects.length === 0" class="empty-state">
+    <p>No projects found</p>
+  </div>
+
+</section>

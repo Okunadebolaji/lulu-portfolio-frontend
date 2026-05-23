@@ -1,0 +1,112 @@
+<!-- About Hero Section -->
+<section class="about-hero">
+  <div class="hero-content">
+    <h1>About Me</h1>
+    <p class="hero-tagline">Passionate designer & developer creating beautiful digital experiences</p>
+  </div>
+</section>
+
+<!-- About Content Section -->
+<section class="about-content">
+  <!-- Introduction -->
+  <div class="intro-section">
+    <div class="intro-text">
+      <h2>Who I Am</h2>
+      <p>
+        I'm a versatile designer and full-stack developer with a passion for creating elegant solutions to complex problems. 
+        With over 5 years of experience in the digital space, I specialize in bridging the gap between beautiful design and functional code.
+      </p>
+      <p>
+        My journey started with a curiosity about how things work, which evolved into a deep appreciation for both aesthetic 
+        excellence and technical precision. Today, I work with creative teams and forward-thinking brands to craft digital experiences 
+        that users love.
+      </p>
+      <div class="intro-stats">
+        <div class="stat">
+          <span class="stat-number">5+</span>
+          <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Projects Completed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">30+</span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+      </div>
+    </div>
+    <div class="intro-image">
+      <div class="image-placeholder">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="150" cy="150" r="120" fill="url(#gradientIntro)" opacity="0.9"/>
+          <defs>
+            <linearGradient id="gradientIntro" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <text x="150" y="160" text-anchor="middle" font-size="40" fill="white" font-weight="bold">LOIS</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience Timeline -->
+  <div class="experience-section">
+    <h2>Experience</h2>
+    <div class="timeline">
+      <div *ngFor="let exp of experiences; let last = last" class="timeline-item" [class.last]="last">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="experience-year">{{ exp.year }}</div>
+          <h3>{{ exp.title }}</h3>
+          <p class="experience-company">{{ exp.company }}</p>
+          <p class="experience-description">{{ exp.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills Grid -->
+  <div class="skills-grid-section">
+    <h2>Core Skills</h2>
+    <div class="skills-grid">
+      <div *ngFor="let skillGroup of skills" class="skill-category">
+        <h3>{{ skillGroup.category }}</h3>
+        <ul class="skill-list">
+          <li *ngFor="let skill of skillGroup.items">{{ skill }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Philosophy -->
+  <div class="philosophy-section">
+    <h2>My Philosophy</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-card">
+        <div class="philosophy-icon">🎯</div>
+        <h3>User-Centric Design</h3>
+        <p>Every design decision is rooted in understanding user needs and behaviors. I believe great design is invisible—it solves problems effortlessly.</p>
+      </div>
+      <div class="philosophy-card">
+        <div class="philosophy-icon">⚡</div>
+        <h3>Performance First</h3>
+        <p>Fast, accessible, and responsive. I optimize every pixel and line of code to ensure experiences work flawlessly across all devices.</p>
+      </div>
+      <div class="philosophy-card">
+        <div class="philosophy-icon">🚀</div>
+        <h3>Continuous Learning</h3>
+        <p>The digital landscape evolves constantly. I stay updated with latest technologies and methodologies to deliver cutting-edge solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <h2>Let's Create Something Great</h2>
+  <p>Interested in working together? I'd love to hear about your project.</p>
+  <a routerLink="/contact" class="cta-button">Get In Touch</a>
+</section>

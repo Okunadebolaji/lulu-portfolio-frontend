@@ -1,0 +1,613 @@
+// ============================================================================
+// THEME CONFIGURATION - DARK & LIGHT MODE WITH PROPER TEXT COLORS
+// ============================================================================
+
+// ============================================================================
+// LIGHT MODE (Default)
+// ============================================================================
+:root,
+body.light-theme {
+  // Primary Colors
+  --primary: #003ec7;
+  --primary-dark: #002a9e;
+  --primary-light: #5a7eff;
+  --primary-fixed: #dde1ff;
+  --primary-container: #e0e7ff;
+
+  // Secondary Colors
+  --secondary: #5c5c5c;
+  --secondary-container: #e8e8e8;
+
+  // Success/Error/Warning
+  --success: #20c997;
+  --error: #ba1a1a;
+  --warning: #ff9800;
+  --info: #0288d1;
+
+  // Background & Surface
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #eeeeee;
+
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f5f5;
+  --surface-container: #eeeeee;
+  --surface-container-high: #e8e8e8;
+
+  // Text Colors - LIGHT MODE (Dark text on light backgrounds)
+  --text-primary: #1b1c1c;
+  --text-secondary: #434656;
+  --text-muted: #999999;
+  --text-tertiary: #808080;
+  --text-inverted: #ffffff;
+
+  // Borders & Outlines
+  --outline: #c3c5d9;
+  --outline-variant: #d0d0d0;
+  --border-color: #d0d0d0;
+  --border-light: #e8e8e8;
+
+  // Navbar
+  --navbar-bg: #ffffff;
+  --navbar-text: #1a1a1a;
+  --navbar-border: #e5e5e5;
+  --navbar-hover: #f5f5f5;
+
+  // Links
+  --link-color: #003ec7;
+  --link-hover: #002a9e;
+
+  // Other
+  --on-primary: #ffffff;
+  --on-secondary: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+// ============================================================================
+// DARK MODE
+// ============================================================================
+body.dark-theme {
+  // Primary Colors
+  --primary: #5a7eff;
+  --primary-dark: #7a9eff;
+  --primary-light: #8ab0ff;
+  --primary-fixed: #003ec7;
+  --primary-container: #1a2a7a;
+
+  // Secondary Colors
+  --secondary: #c3c3c3;
+  --secondary-container: #2a2a2a;
+
+  // Success/Error/Warning
+  --success: #66d9a1;
+  --error: #ff8a80;
+  --warning: #ffb74d;
+  --info: #4fc3f7;
+
+  // Background & Surface
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2a2a2a;
+  --bg-tertiary: #3a3a3a;
+
+  --surface-container-lowest: #0f0f0f;
+  --surface-container-low: #1a1a1a;
+  --surface-container: #2a2a2a;
+  --surface-container-high: #3a3a3a;
+
+  // Text Colors - DARK MODE (Light text on dark backgrounds)
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  --text-tertiary: #606060;
+  --text-inverted: #1a1a1a;
+
+  // Borders & Outlines
+  --outline: #444444;
+  --outline-variant: #555555;
+  --border-color: #444444;
+  --border-light: #2a2a2a;
+
+  // Navbar
+  --navbar-bg: #1a1a1a;
+  --navbar-text: #e0e0e0;
+  --navbar-border: #333333;
+  --navbar-hover: #2d2d2d;
+
+  // Links
+  --link-color: #5a7eff;
+  --link-hover: #8ab0ff;
+
+  // Other
+  --on-primary: #ffffff;
+  --on-secondary: #000000;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+// ============================================================================
+// APPLY THEME TO ALL ELEMENTS
+// ============================================================================
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  // ========================================================================
+  // INPUT & FORM ELEMENTS
+  // ========================================================================
+  input,
+  textarea,
+  select {
+    background-color: var(--surface-container-lowest);
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+
+    &:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 62, 199, 0.1);
+    }
+  }
+
+  // ========================================================================
+  // CARDS & CONTAINERS
+  // ========================================================================
+  .card,
+  .info-card,
+  .method-card,
+  .message-item,
+  .skill-card,
+  .project-card {
+    background: var(--surface-container-lowest);
+    border-color: var(--outline-variant);
+    color: var(--text-primary);
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-primary);
+    }
+
+    p, span, small {
+      color: var(--text-primary);
+    }
+  }
+
+  // ========================================================================
+  // FORM ELEMENTS
+  // ========================================================================
+  .form-input,
+  .form-textarea,
+  .form-select {
+    background: var(--surface-container-lowest);
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+
+    &:focus {
+      border-color: var(--primary);
+    }
+  }
+
+  .form-label,
+  label {
+    color: var(--text-primary);
+  }
+
+  .form-text,
+  small {
+    color: var(--text-secondary);
+  }
+
+  // ========================================================================
+  // TABLES
+  // ========================================================================
+  table {
+    background: var(--surface-container-lowest);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    thead {
+      background: var(--surface-container);
+      color: var(--text-primary);
+
+      th {
+        background: var(--surface-container);
+        color: var(--text-secondary);
+        border-color: var(--outline-variant);
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom-color: var(--outline-variant);
+
+        &:hover {
+          background-color: var(--surface-container-low);
+        }
+
+        td {
+          color: var(--text-primary);
+          border-bottom-color: var(--outline-variant);
+        }
+      }
+    }
+  }
+
+  // ========================================================================
+  // BUTTONS
+  // ========================================================================
+  .btn {
+    transition: all 0.3s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border: 1px solid var(--primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+  }
+
+  .btn-secondary {
+    background: var(--surface-container);
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+
+    &:hover:not(:disabled) {
+      background-color: var(--surface-container-high);
+      border-color: var(--primary);
+    }
+  }
+
+  .btn-danger,
+  .btn-error {
+    background-color: var(--error);
+    color: white;
+    border: 1px solid var(--error);
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+
+  .btn-success {
+    background-color: var(--success);
+    color: white;
+    border: 1px solid var(--success);
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+
+  // ========================================================================
+  // LINKS
+  // ========================================================================
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--link-hover);
+    }
+
+    &:visited {
+      color: var(--link-color);
+    }
+  }
+
+  // ========================================================================
+  // HEADERS & TYPOGRAPHY
+  // ========================================================================
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+  }
+
+  p {
+    color: var(--text-primary);
+  }
+
+  // ========================================================================
+  // TEXT UTILITY CLASSES
+  // ========================================================================
+  .text-primary {
+    color: var(--text-primary) !important;
+  }
+
+  .text-secondary {
+    color: var(--text-secondary) !important;
+  }
+
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+
+  .text-tertiary {
+    color: var(--text-tertiary) !important;
+  }
+
+  .text-inverted {
+    color: var(--text-inverted) !important;
+  }
+
+  .text-success {
+    color: var(--success) !important;
+  }
+
+  .text-error,
+  .text-danger {
+    color: var(--error) !important;
+  }
+
+  .text-warning {
+    color: var(--warning) !important;
+  }
+
+  .text-info {
+    color: var(--info) !important;
+  }
+
+  // ========================================================================
+  // BACKGROUND UTILITY CLASSES
+  // ========================================================================
+  .bg-primary {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .bg-secondary {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .bg-tertiary {
+    background: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .bg-success {
+    background: var(--success) !important;
+    color: white !important;
+  }
+
+  .bg-error,
+  .bg-danger {
+    background: var(--error) !important;
+    color: white !important;
+  }
+
+  .bg-warning {
+    background: var(--warning) !important;
+    color: #000 !important;
+  }
+
+  .bg-info {
+    background: var(--info) !important;
+    color: white !important;
+  }
+
+  // ========================================================================
+  // ALERTS & NOTIFICATIONS
+  // ========================================================================
+  .alert,
+  .notification,
+  .message {
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+
+    &.alert-primary,
+    &.alert-info {
+      background-color: rgba(0, 62, 199, 0.1);
+      border-color: var(--info);
+      color: var(--text-primary);
+    }
+
+    &.alert-success {
+      background-color: rgba(32, 201, 151, 0.1);
+      border-color: var(--success);
+      color: var(--text-primary);
+    }
+
+    &.alert-warning {
+      background-color: rgba(255, 152, 0, 0.1);
+      border-color: var(--warning);
+      color: var(--text-primary);
+    }
+
+    &.alert-danger,
+    &.alert-error {
+      background-color: rgba(186, 26, 26, 0.1);
+      border-color: var(--error);
+      color: var(--text-primary);
+    }
+  }
+
+  // ========================================================================
+  // MODALS & DIALOGS
+  // ========================================================================
+  .modal,
+  .dialog,
+  .modal-content {
+    background: var(--surface-container-lowest);
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+  }
+
+  .modal-header {
+    background: var(--surface-container);
+    border-color: var(--outline-variant);
+    color: var(--text-primary);
+  }
+
+  .modal-footer {
+    background: var(--surface-container-low);
+    border-color: var(--outline-variant);
+  }
+
+  // ========================================================================
+  // LISTS
+  // ========================================================================
+  ul, ol {
+    color: var(--text-primary);
+
+    li {
+      color: var(--text-primary);
+
+      a {
+        color: var(--link-color);
+
+        &:hover {
+          color: var(--link-hover);
+        }
+      }
+    }
+  }
+
+  // ========================================================================
+  // CODE & PREFORMATTED TEXT
+  // ========================================================================
+  code,
+  pre {
+    background: var(--surface-container);
+    color: var(--text-primary);
+    border-color: var(--outline-variant);
+  }
+
+  // ========================================================================
+  // HR & DIVIDERS
+  // ========================================================================
+  hr {
+    border-color: var(--outline-variant);
+  }
+
+  // ========================================================================
+  // BADGES
+  // ========================================================================
+  .badge {
+    background: var(--primary);
+    color: var(--on-primary);
+
+    &.badge-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+
+    &.badge-success {
+      background: var(--success);
+      color: white;
+    }
+
+    &.badge-danger,
+    &.badge-error {
+      background: var(--error);
+      color: white;
+    }
+
+    &.badge-warning {
+      background: var(--warning);
+      color: #000;
+    }
+  }
+
+  // ========================================================================
+  // SCROLLBARS (For Webkit browsers)
+  // ========================================================================
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--outline-variant);
+    border-radius: 5px;
+
+    &:hover {
+      background: var(--outline);
+    }
+  }
+}
+
+// ============================================================================
+// FORCED LIGHT TEXT SECTIONS (Always light regardless of theme)
+// ============================================================================
+
+// Contact/Call-to-action section
+.contact-section,
+.cta-section {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  
+  h2, h3, h4 {
+    color: #ffffff !important;
+  }
+
+  p {
+    color: #e0e0e0 !important;
+  }
+
+  .subtitle {
+    color: #e0e0e0 !important;
+  }
+
+  a {
+    color: #ffffff !important;
+  }
+}
+
+// Hero section
+.hero-section,
+.home-hero {
+  h1 {
+    color: #1a1a1a !important;
+  }
+
+  .subtitle {
+    color: #434656 !important;
+  }
+
+  p {
+    color: #666666 !important;
+  }
+}
+
+// Dashboard tables
+.dashboard-table,
+.recent-projects table {
+  thead {
+    background: #1a1a1a !important;
+
+    th {
+      color: #b0b0b0 !important;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        color: #1b1c1c !important;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SMOOTH TRANSITIONS FOR THEME CHANGES
+// ============================================================================
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+}

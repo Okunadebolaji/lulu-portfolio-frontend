@@ -1,0 +1,610 @@
+@use 'sass:color';
+@use '../../../../src/styles/design-system' as *;
+
+// ============================================================================
+// DASHBOARD COMPONENT STYLES
+// ============================================================================
+
+.dashboard {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $space-xl;
+  background: linear-gradient(135deg, $surface 0%, $surface-container-low 100%);
+  min-height: 100vh;
+
+  @include respond-to('sm') {
+    padding: $space-lg;
+  }
+
+  @include respond-to('xs') {
+    padding: $space-md;
+  }
+}
+
+// ============================================================================
+// DASHBOARD HEADER
+// ============================================================================
+
+.dashboard-header {
+  margin-bottom: $space-3xl;
+  padding-bottom: $space-2xl;
+  border-bottom: 1px solid $outline-variant;
+}
+
+.header-content {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $space-lg;
+
+  h1 {
+    margin: 0;
+    color: $text-primary;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin: $space-sm 0 0 0;
+    color: $text-secondary;
+  }
+}
+
+.btn-refresh {
+  @include button-reset;
+  @include flex-center;
+  gap: $space-sm;
+  
+  padding: $space-md $space-lg;
+  background: $primary;
+  color: white;
+  border-radius: $radius-md;
+  font-weight: 500;
+   font-size: 14px;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  
+  transition: all $transition-base;
+  box-shadow: $shadow-sm;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($primary, $lightness: -5%);
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: $shadow-lg;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .refresh-icon {
+    display: inline-block;
+    font-size: 16px;
+    transition: transform $transition-base;
+
+    &.spinning {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+// ============================================================================
+// STATISTICS SECTION
+// ============================================================================
+
+.stats-section {
+  margin-bottom: $space-3xl;
+}
+
+.stats-grid {
+  @include grid-auto;
+  gap: $space-xl;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('xs') {
+    grid-template-columns: 1fr;
+    gap: $space-lg;
+  }
+}
+
+.stat-card {
+  @include card;
+  background: $surface-container-lowest;
+  border: 1px solid $outline-variant;
+  border-left: 4px solid $primary;
+  padding: $space-xl;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: $space-lg;
+  height: 100%;
+  min-height: 180px;
+
+  animation: fadeInUp 0.5s ease-out;
+
+  &:hover {
+    border-left-color: $primary;
+    box-shadow: $shadow-primary;
+    transform: translateY(-4px);
+  }
+
+  .stat-header {
+    @include flex-between;
+    align-items: flex-start;
+
+    .stat-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .label-caps {
+      color: $text-secondary;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  }
+
+  .stat-body {
+    .stat-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: $primary;
+      line-height: 1;
+      margin-bottom: $space-sm;
+    }
+
+    p {
+      margin: 0;
+      color: $text-secondary;
+    }
+  }
+
+  .stat-action {
+    @include flex-center;
+    gap: $space-xs;
+    
+    color: $primary;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: gap $transition-fast;
+
+    &:hover {
+      gap: $space-sm;
+    }
+
+    .arrow {
+      display: inline-block;
+      transition: transform $transition-fast;
+    }
+
+    &:hover .arrow {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// ============================================================================
+// RECENT PROJECTS SECTION
+// ============================================================================
+
+.recent-projects-section {
+  background: $surface-container-lowest;
+  border: 1px solid $outline-variant;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  margin-bottom: $space-3xl;
+  animation: fadeInUp 0.6s ease-out;
+
+  @include respond-to('xs') {
+    padding: $space-lg;
+  }
+}
+
+.section-header {
+  @include flex-between;
+  align-items: flex-start;
+  margin-bottom: $space-xl;
+  flex-wrap: wrap;
+  gap: $space-lg;
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-primary;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: $space-sm 0 0 0;
+    color: $text-secondary;
+  }
+}
+
+.view-all-link {
+  @include flex-center;
+  gap: $space-sm;
+  
+  color: $primary;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: gap $transition-fast;
+  padding: $space-sm $space-md;
+  border-radius: $radius-sm;
+  white-space: nowrap;
+
+  &:hover {
+    gap: $space-md;
+    background: $primary-fixed;
+  }
+
+  .arrow {
+    display: inline-block;
+    transition: transform $transition-fast;
+  }
+
+  &:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+// ============================================================================
+// PROJECTS TABLE
+// ============================================================================
+
+.projects-table-wrapper {
+  overflow-x: auto;
+  border-radius: $radius-md;
+  border: 1px solid $outline-variant;
+}
+
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  thead {
+    background: $surface-container;
+    border-bottom: 1px solid $outline-variant;
+
+    th {
+      padding: $space-lg;
+      text-align: left;
+      color: $text-secondary;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-right: 1px solid $outline-variant;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $outline-variant;
+      transition: background-color $transition-fast;
+
+      &:hover {
+        background: $surface-container-low;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: $space-lg;
+        color: $text-primary;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.project-row {
+  &:hover {
+    background: rgba($primary, 0.05);
+  }
+}
+
+.project-name {
+  .project-info {
+    @include flex-center;
+    gap: $space-md;
+
+    .project-thumbnail {
+      width: 48px;
+      height: 48px;
+      border-radius: $radius-md;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid $outline-variant;
+      flex-shrink: 0;
+      background-color: $surface-container;
+    }
+
+    .project-details {
+      @include flex-col;
+      gap: $space-xs;
+
+      span {
+        font-weight: 600;
+        color: $text-primary;
+      }
+
+      p {
+        margin: 0;
+        color: $text-secondary;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.category-badge {
+  display: inline-block;
+  padding: $space-sm $space-md;
+  border-radius: $radius-sm;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &[data-category='primary'] {
+    background: $primary-fixed;
+    color: $primary;
+  }
+
+  &[data-category='secondary'] {
+    background: $secondary-fixed;
+    color: $secondary;
+  }
+
+  &[data-category='tertiary'] {
+    background: $tertiary-fixed;
+    color: $tertiary;
+  }
+}
+
+.date-text {
+  color: $text-secondary;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+.btn-action {
+  display: inline-block;
+  padding: $space-sm $space-lg;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all $transition-fast;
+  border: 1px solid $outline-variant;
+  color: $primary;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary;
+    color: $on-primary;
+    border-color: $primary;
+  }
+
+  &.btn-edit {
+    &:hover {
+      box-shadow: $shadow-primary;
+    }
+  }
+}
+
+// ============================================================================
+// LOADING & EMPTY STATES
+// ============================================================================
+
+.loading-state {
+  padding: $space-xl;
+  text-align: center;
+}
+
+.skeleton-list {
+  display: grid;
+  gap: $space-lg;
+
+  .skeleton-item {
+    height: 60px;
+    background: linear-gradient(
+      90deg,
+      $surface-container-low 25%,
+      $surface-container 50%,
+      $surface-container-low 75%
+    );
+    background-size: 200% 100%;
+    border-radius: $radius-md;
+    animation: shimmer 2s infinite;
+  }
+}
+
+.empty-state {
+  padding: $space-3xl $space-xl;
+  text-align: center;
+  color: $text-secondary;
+
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: $space-xl;
+  }
+
+  h3 {
+    margin: 0 0 $space-md 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  p {
+    margin: 0 0 $space-lg 0;
+  }
+
+  .btn {
+    display: inline-block;
+  }
+}
+
+// ============================================================================
+// DASHBOARD FOOTER
+// ============================================================================
+
+.dashboard-footer {
+  border-top: 1px solid $outline-variant;
+  padding-top: $space-xl;
+  margin-top: $space-3xl;
+}
+
+.footer-content {
+  @include flex-center;
+  gap: $space-2xl;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-stat {
+  @include flex-col-center;
+  gap: $space-sm;
+
+  .label-caps {
+    color: $text-secondary;
+    font-size: 11px;
+  }
+
+  .body-md {
+    color: $text-primary;
+  }
+
+  .status-badge {
+    color: $error;
+    font-weight: 600;
+
+    &.active {
+      color: $success;
+    }
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background: $outline-variant;
+}
+
+// ============================================================================
+// BUTTON COMPONENT
+// ============================================================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-md $space-xl;
+  border-radius: $radius-md;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all $transition-base;
+  letter-spacing: 0.05em;
+
+  &.btn-primary {
+    background: $primary;
+    color: $on-primary;
+    box-shadow: $shadow-sm;
+
+    &:hover {
+      background: color.adjust($primary, $lightness: -5%);
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &.btn-secondary {
+    background: $surface-container;
+    color: $text-primary;
+    border: 1px solid $outline-variant;
+
+    &:hover {
+      background: $surface-container-high;
+      border-color: $primary;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
+@include respond-to('xs') {
+  .stats-grid {
+    gap: $space-lg;
+  }
+
+  .projects-table {
+    font-size: 12px;
+
+    thead th,
+    tbody td {
+      padding: $space-md;
+    }
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  .view-all-link {
+    width: 100%;
+  }
+
+  .footer-content {
+    gap: $space-lg;
+  }
+}
