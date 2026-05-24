@@ -185,16 +185,19 @@ import Swal from 'sweetalert2';
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #434656;
     }
 
     .btn-view:hover {
       border-color: #003ec7;
       background: #dde1ff;
+      color: #003ec7;
     }
 
     .btn-delete:hover {
       border-color: #ba1a1a;
       background: #ffdad6;
+      color: #ba1a1a;
     }
 
     @media (max-width: 768px) {
@@ -227,7 +230,6 @@ export class ContactMessagesAdminComponent implements OnInit {
       next: (response: any) => {
         console.log('API Response:', response);
         
-        // Handle ApiResponse wrapper: { success, message, data, errors }
         const data = response?.data || response || [];
         
         this.messages = (Array.isArray(data) ? data : []).sort((a: any, b: any) => 

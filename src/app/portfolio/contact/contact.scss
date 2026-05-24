@@ -12,7 +12,7 @@
 .contact-hero {
   position: relative;
   padding: $space-5xl $space-xl;
-  background: linear-gradient(135deg, $surface-container-lowest 0%, $surface-container-low 100%);
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   overflow: hidden;
   min-height: 400px;
   display: flex;
@@ -38,8 +38,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba($primary, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba($primary, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -53,7 +53,7 @@
 
   h1 {
     margin: 0 0 $space-lg 0;
-    color: $text-primary;
+    color: white;
     font-size: clamp(32px, 6vw, 56px);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -62,7 +62,7 @@
 
   .hero-tagline {
     margin: 0;
-    color: $text-secondary;
+    color: white;
     font-size: clamp(14px, 2vw, 18px);
     line-height: 1.6;
   }
@@ -101,6 +101,10 @@
     grid-template-columns: 1fr;
     gap: $space-3xl;
   }
+
+  @include respond-to('xs') {
+    gap: $space-2xl;
+  }
 }
 
 // ============================================================================
@@ -109,6 +113,10 @@
 
 .contact-info {
   animation: fadeInUp 0.8s ease-out 0.1s both;
+
+  @include respond-to('xs') {
+    margin-bottom: $space-2xl;
+  }
 }
 
 .contact-info h2 {
@@ -124,6 +132,11 @@
   color: $text-secondary;
   font-size: 16px;
   line-height: 1.7;
+
+  @include respond-to('xs') {
+    font-size: 14px;
+    margin-bottom: $space-2xl;
+  }
 }
 
 // Info Cards Grid
@@ -141,6 +154,10 @@
   transition: all $transition-base;
   position: relative;
   overflow: hidden;
+
+  @include respond-to('xs') {
+    padding: $space-lg;
+  }
 
   &::before {
     content: '';
@@ -170,6 +187,12 @@
     justify-content: center;
     color: $primary;
     font-size: 28px;
+
+    @include respond-to('xs') {
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+    }
   }
 
   h3 {
@@ -177,6 +200,10 @@
     color: $text-primary;
     font-size: 18px;
     font-weight: 600;
+
+    @include respond-to('xs') {
+      font-size: 16px;
+    }
   }
 
   p {
@@ -184,6 +211,10 @@
     color: $text-secondary;
     font-size: 16px;
     line-height: 1.6;
+
+    @include respond-to('xs') {
+      font-size: 14px;
+    }
   }
 
   a {
@@ -191,6 +222,8 @@
     text-decoration: none;
     font-weight: 600;
     transition: all $transition-fast;
+    display: inline-block;
+    word-break: break-word;
 
     &:hover {
       color: color.adjust($primary, $lightness: -10%);
@@ -214,6 +247,10 @@
   border-radius: $radius-lg;
   animation: slideInUp 0.6s ease-out 0.3s both;
 
+  @include respond-to('xs') {
+    padding: $space-lg;
+  }
+
   .availability-badge {
     display: flex;
     align-items: center;
@@ -227,12 +264,17 @@
       background: $success;
       border-radius: $radius-full;
       animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
     span {
       color: $text-primary;
       font-weight: 600;
       font-size: 16px;
+
+      @include respond-to('xs') {
+        font-size: 14px;
+      }
     }
   }
 
@@ -240,6 +282,10 @@
     margin: 0;
     color: $text-secondary;
     font-size: 14px;
+
+    @include respond-to('xs') {
+      font-size: 13px;
+    }
   }
 }
 
@@ -256,30 +302,6 @@
     font-size: clamp(24px, 4vw, 32px);
     font-weight: 700;
     letter-spacing: -0.01em;
-  }
-}
-
-// Alert Messages
-.alert {
-  padding: $space-lg $space-xl;
-  border-radius: $radius-md;
-  margin-bottom: $space-xl;
-  font-size: 14px;
-  font-weight: 500;
-  animation: slideDown 0.3s ease-out;
-
-  &.alert-success {
-    background: linear-gradient(135deg, rgba($success, 0.1) 0%, rgba($success, 0.05) 100%);
-    border: 1px solid rgba($success, 0.3);
-    color: color.adjust($success, $lightness: -10%);
-    border-left: 4px solid $success;
-  }
-
-  &.alert-error {
-    background: linear-gradient(135deg, rgba($error, 0.1) 0%, rgba($error, 0.05) 100%);
-    border: 1px solid rgba($error, 0.3);
-    color: color.adjust($error, $lightness: -10%);
-    border-left: 4px solid $error;
   }
 }
 
@@ -301,6 +323,10 @@
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+
+    @include respond-to('xs') {
+      font-size: 12px;
+    }
   }
 }
 
@@ -315,6 +341,13 @@
   background: $surface-container-lowest;
   transition: all $transition-base;
   caret-color: $primary;
+  width: 100%;
+  box-sizing: border-box;
+
+  @include respond-to('xs') {
+    padding: $space-md;
+    font-size: 14px;
+  }
 
   &::placeholder {
     color: $text-muted;
@@ -386,6 +419,12 @@
   box-shadow: $shadow-md;
   position: relative;
   overflow: hidden;
+  width: 100%;
+
+  @include respond-to('xs') {
+    padding: $space-md $space-lg;
+    font-size: 14px;
+  }
 
   &::before {
     content: '';
@@ -426,6 +465,11 @@
   font-size: 14px;
   text-align: center;
   font-style: italic;
+
+  @include respond-to('xs') {
+    font-size: 12px;
+    margin-top: $space-lg;
+  }
 }
 
 // ============================================================================
@@ -464,6 +508,7 @@
 
   @include respond-to('xs') {
     gap: $space-xl;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -475,6 +520,10 @@
   text-align: center;
   transition: all $transition-base;
   animation: fadeInUp 0.6s ease-out;
+
+  @include respond-to('xs') {
+    padding: $space-lg;
+  }
 
   &:nth-child(2) {
     animation-delay: 0.1s;
@@ -500,6 +549,10 @@
     color: $text-primary;
     font-size: 20px;
     font-weight: 700;
+
+    @include respond-to('xs') {
+      font-size: 16px;
+    }
   }
 
   p {
@@ -507,6 +560,11 @@
     color: $text-secondary;
     font-size: 15px;
     line-height: 1.6;
+
+    @include respond-to('xs') {
+      font-size: 13px;
+      margin-bottom: $space-lg;
+    }
   }
 }
 
@@ -521,6 +579,11 @@
   font-size: 14px;
   transition: all $transition-base;
   border: 1px solid transparent;
+
+  @include respond-to('xs') {
+    font-size: 13px;
+    padding: $space-sm $space-lg;
+  }
 
   &:hover {
     color: $on-primary;
@@ -553,35 +616,23 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
   }
   50% {
     opacity: 0.5;
-  }
-}
-
-// ============================================================================
-// RESPONSIVE DESIGN
-// ============================================================================
-
-@include respond-to('xs') {
-  .contact-container {
-    gap: $space-2xl;
-  }
-
-  .info-card,
-  .method-card {
-    padding: $space-xl;
-  }
-
-  .submit-btn {
-    width: 100%;
-  }
-
-  .methods-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -595,9 +646,4 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  // Optional: Add dark mode support here if needed
-  // This maintains light theme for now
 }
