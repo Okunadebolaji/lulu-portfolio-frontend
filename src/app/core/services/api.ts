@@ -3,16 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth } from './auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:5113/api'; // Change to your API URL
+  private apiUrl = `${environment.apiUrl}/api`;
 
   constructor(private http: HttpClient, private auth: Auth) {}
 
-  // 🔧 HELPER: Get headers with JWT token
   private getHeaders(): HttpHeaders {
     const token = this.auth.getToken();
     return new HttpHeaders({
@@ -21,15 +21,16 @@ export class ApiService {
     });
   }
 
-  // 📋 PROJECTS
   getProjects(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/project`).pipe(
       map((response: any) => {
-        // Handle wrapped response or direct data
-        if (response && response.data) {
+        if (response && response.data && Array.isArray(response.data)) {
           return response;
         }
-        return response;
+        if (Array.isArray(response)) {
+          return { data: response };
+        }
+        return { data: [] };
       })
     );
   }
@@ -56,8 +57,6 @@ export class ApiService {
     });
   }
 
-  // 🔐 ADMIN: Upload project image
-  // Returns: { success: true, url: "http://localhost:5113/uploads/abc.png" }
   uploadProjectImage(file: File): Observable<any> {
     const token = this.auth.getToken();
     
@@ -79,18 +78,14 @@ export class ApiService {
       {
         headers: new HttpHeaders({
           'Authorization': `Bearer ${token}`
-          // ✅ Do NOT set Content-Type - let browser set it for FormData
         })
       }
     );
   }
 
-  // 🎯 SKILLS
   getSkills(): Observable<any[]> {
     return this.http.get<any>(`${this.apiUrl}/skills`).pipe(
-      // Extract the 'data' array from the ApiResponse wrapper
       map((response: any) => {
-        // Handle both wrapped response and direct array
         if (response && response.data && Array.isArray(response.data)) {
           return response.data;
         }
@@ -124,9 +119,18 @@ export class ApiService {
     });
   }
 
-  // 💼 SERVICES
   getServices(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/services`);
+    return this.http.get<any>(`${this.apiUrl}/services`).pipe(
+      map((response: any) => {
+        if (response && response.data && Array.isArray(response.data)) {
+          return response.data;
+        }
+        if (Array.isArray(response)) {
+          return response;
+        }
+        return [];
+      })
+    );
   }
 
   getServiceById(id: string): Observable<any> {
@@ -151,9 +155,18 @@ export class ApiService {
     });
   }
 
-  // ⭐ TESTIMONIALS
   getTestimonials(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/testimonials`);
+    return this.http.get<any>(`${this.apiUrl}/testimonials`).pipe(
+      map((response: any) => {
+        if (response && response.data && Array.isArray(response.data)) {
+          return response.data;
+        }
+        if (Array.isArray(response)) {
+          return response;
+        }
+        return [];
+      })
+    );
   }
 
   getTestimonialById(id: string): Observable<any> {
@@ -178,7 +191,6 @@ export class ApiService {
     });
   }
 
-  // 📧 CONTACT MESSAGES
   getContactMessages(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/contact`, {
       headers: this.getHeaders()
@@ -195,7 +207,6 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/contact`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-        // No auth needed for public contact form
       })
     });
   }
@@ -206,7 +217,6 @@ export class ApiService {
     });
   }
 
-  // 📝 ABOUT SECTION
   getAbout(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/about`);
   }
@@ -217,7 +227,6 @@ export class ApiService {
     });
   }
 
-  // 📰 BLOG (Optional)
   getBlogPosts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/blog`);
   }
