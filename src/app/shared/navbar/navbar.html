@@ -13,6 +13,7 @@
       class="mobile-toggle"
       (click)="toggleMobileMenu()"
       [class.active]="mobileMenuOpen"
+      aria-label="Toggle menu"
     >
       <span></span>
       <span></span>
@@ -27,7 +28,7 @@
       <li><a routerLink="/contact" routerLinkActive="active" (click)="mobileMenuOpen = false">Contact</a></li>
     </ul>
 
-    <!-- Right Side Actions -->
+    <!-- Right Side Actions (Desktop) -->
     <div class="navbar-actions">
       <!-- Admin Panel Link -->
       <a 
@@ -60,5 +61,44 @@
         Login
       </a>
     </div>
+  </div>
+
+  <!-- Mobile Actions Menu (only visible when mobile menu is open) -->
+  <div class="mobile-actions" [class.active]="mobileMenuOpen">
+    <!-- Admin Panel Link -->
+    <a 
+      *ngIf="isAuthenticated"
+      routerLink="/admin/dashboard"
+      class="mobile-admin-link"
+      title="Admin Dashboard"
+      (click)="mobileMenuOpen = false"
+    >
+      <i class="bi bi-gear"></i> Admin Dashboard
+    </a>
+
+    <!-- User Info -->
+    <div *ngIf="isAuthenticated" class="mobile-user-info">
+      <span class="mobile-user-name">{{ currentUser?.fullName || currentUser?.email }}</span>
+    </div>
+
+    <!-- Logout Button -->
+    <button 
+      *ngIf="isAuthenticated"
+      (click)="logout()"
+      class="mobile-logout-btn"
+      title="Logout"
+    >
+      <i class="bi bi-door-left"></i> Logout
+    </button>
+
+    <!-- Login Link -->
+    <a 
+      *ngIf="!isAuthenticated"
+      routerLink="/auth/login"
+      class="mobile-login-link"
+      (click)="mobileMenuOpen = false"
+    >
+      <i class="bi bi-box-arrow-in-right"></i> Login
+    </a>
   </div>
 </nav>
