@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../enviroments/enviroment';
 
 export interface LoginRequest {
   email: string;
@@ -43,7 +44,7 @@ export interface AuthResponseSimple {
   providedIn: 'root',
 })
 export class Auth {
-  private apiUrl = 'http://localhost:5113/api/Auth';
+  private apiUrl = `${environment.apiUrl}/api/Auth`;
   private tokenKey = 'auth_token';
   private userKey = 'auth_user';
   
@@ -59,14 +60,12 @@ export class Auth {
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      // ✅ SYNCHRONOUSLY restore auth immediately
       this.restoreAuthFromStorage();
     } else {
       this.markInitialized();
     }
   }
 
-  // ✅ NEW: Restore auth synchronously from localStorage
   private restoreAuthFromStorage(): void {
     console.log('🔄 Auth constructor: Restoring auth from storage...');
     
@@ -98,18 +97,15 @@ export class Auth {
       console.log('ℹ️ No complete auth data in storage');
     }
     
-    // ✅ Mark as initialized immediately (synchronously)
     this.markInitialized();
   }
 
-  // ✅ Mark initialization complete
   private markInitialized(): void {
     this.initialized = true;
     this.initializationSubject.next(true);
     console.log('✅ Auth.constructor: Marked as initialized');
   }
 
-  // 🔐 LOGIN
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
@@ -137,7 +133,6 @@ export class Auth {
       );
   }
 
-  // 📝 REGISTER
   register(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data)
       .pipe(
@@ -165,21 +160,18 @@ export class Auth {
       );
   }
 
-  // 💾 SAVE TOKEN
   private saveToken(token: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.tokenKey, token);
     }
   }
 
-  // ✅ SAVE USER
   private saveUser(user: any): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.userKey, JSON.stringify(user));
     }
   }
 
-  // ✅ RETRIEVE USER
   private getStoredUser(): any {
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem(this.userKey);
@@ -188,7 +180,6 @@ export class Auth {
     return null;
   }
 
-  // 🔑 GET TOKEN
   getToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(this.tokenKey);
@@ -196,7 +187,6 @@ export class Auth {
     return null;
   }
 
-  // ✅ CHECK IF LOGGED IN
   isAuthenticated(): boolean {
     const token = this.getToken();
     const user = this.currentUserSubject.value;
@@ -210,7 +200,6 @@ export class Auth {
     return !!token && !!user;
   }
 
-  // 🚪 LOGOUT
   logout(): void {
     console.log('🚪 Logout called');
     if (isPlatformBrowser(this.platformId)) {
@@ -220,17 +209,14 @@ export class Auth {
     this.currentUserSubject.next(null);
   }
 
-  // 👤 GET CURRENT USER
   getCurrentUser(): any {
     return this.currentUserSubject.value;
   }
 
-  // ✅ Check if initialized
   isInitialized(): boolean {
     return this.initialized;
   }
 
-  // ✅ Helper to check token expiration
   private isTokenExpired(payload: any): boolean {
     if (!payload.exp) {
       return false;
