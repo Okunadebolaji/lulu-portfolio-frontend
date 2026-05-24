@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { environment } from '../../../enviroments/enviroment';
+import { environment } from '../../../environments/enviroment';
 
 export interface LoginRequest {
   email: string;
