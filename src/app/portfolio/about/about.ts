@@ -17,6 +17,10 @@ interface Experience {
   styleUrl: './about.scss',
 })
 export class About {
+  // Permanent Cloudinary CV URL - never expires
+  cvCloudinaryUrl = 'https://res.cloudinary.com/de8lzuvh0/image/upload/v1/lulu-portfolio/projects/LOIS_Juwonio_AJANI_CV_xc55vg';
+  cvFileName = 'Lois_Ajani_CV.pdf';
+
   experiences: Experience[] = [
     {
       year: '2023 - Present',
@@ -44,4 +48,20 @@ export class About {
     { category: 'Backend', items: ['Node.js', 'Express', 'SQL', 'MongoDB'] },
     { category: 'Tools', items: ['Git', 'Docker', 'AWS', 'Jira'] }
   ];
+
+  // CV Download function - downloads directly from Cloudinary
+  downloadCV() {
+    const link = document.createElement('a');
+    link.href = this.cvCloudinaryUrl;
+    link.download = this.cvFileName;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // CV View function - opens PDF in new tab from Cloudinary
+  viewCV() {
+    window.open(this.cvCloudinaryUrl, '_blank');
+  }
 }
