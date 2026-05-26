@@ -21,12 +21,13 @@
 }
 
 .sidebar-header {
-  padding: 20px;
+  padding: 15px 20px;
   border-bottom: 1px solid #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-height: 60px;
+  gap: 10px;
 }
 
 .sidebar-header h3 {
@@ -34,11 +35,21 @@
   font-size: 16px;
   transition: opacity 0.3s ease;
   color: white;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebar-header .toggle-btn {
   color: white;
   font-size: 24px;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
 }
 
 .sidebar-header .toggle-btn:hover {
@@ -47,7 +58,7 @@
 
 .sidebar-header .toggle-btn i {
   color: white !important;
-  font-size: 24px !important;
+  font-size: 20px !important;
 }
 
 .sidebar.collapsed .sidebar-header h3 {
