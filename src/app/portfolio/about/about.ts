@@ -18,7 +18,7 @@ interface Experience {
 })
 export class About {
   // Permanent Cloudinary CV URL - never expires
-  cvCloudinaryUrl = 'https://res.cloudinary.com/de8lzuvh0/raw/upload/LOIS_Juwonio_AJANI_CV_xc55vg';
+  cvCloudinaryUrl = 'https://res.cloudinary.com/de8lzuvh0/image/upload/v1779791728/LOIS_Juwonlo_AJANI_CV_bc8bqk.pdf';
   cvFileName = 'Lois_Ajani_CV.pdf';
 
   experiences: Experience[] = [
