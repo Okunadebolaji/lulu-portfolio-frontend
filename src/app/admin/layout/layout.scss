@@ -33,6 +33,21 @@
   margin: 0;
   font-size: 16px;
   transition: opacity 0.3s ease;
+  color: white;
+}
+
+.sidebar-header .toggle-btn {
+  color: white;
+  font-size: 24px;
+}
+
+.sidebar-header .toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header .toggle-btn i {
+  color: white !important;
+  font-size: 24px !important;
 }
 
 .sidebar.collapsed .sidebar-header h3 {
@@ -42,9 +57,9 @@
 .toggle-btn {
   background: none;
   border: none;
-  color: white;
+  color: #333;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 24px;
   padding: 8px 12px;
   border-radius: 6px;
   transition: background 0.3s ease;
@@ -53,6 +68,19 @@
   justify-content: center;
   min-width: 40px;
   height: 40px;
+  z-index: 1001;
+}
+
+.toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn i {
+  font-size: 24px !important;
+  color: #333 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .toggle-btn:hover {
