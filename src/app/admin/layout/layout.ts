@@ -56,7 +56,7 @@ export class AdminLayout implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Logged Out',
-          text: 'You have been logged out successfully.',
+          text: 'You have logged out successfully.',
           confirmButtonColor: '#003ec7',
           confirmButtonText: 'OK'
         }).then(() => {
