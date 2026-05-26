@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": ["/assets/*", "/*.js", "/*.css", "/*.json"],
+  "rules": [
+    {
+      "include": "/*",
+      "exclude": ["/assets/*", "/*.{js,css,json}"],
+      "method": ["GET", "HEAD"],
+      "reroute": "/index.html"
+    }
+  ]
+}
