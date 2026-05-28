@@ -21,20 +21,20 @@
 }
 
 .sidebar-header {
-  padding: 15px 20px;
+  padding: 10px 15px;
   border-bottom: 1px solid #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px;
-  gap: 10px;
+  min-height: 45px;
+  gap: 8px;
   position: relative;
   z-index: 102;
 }
 
 .sidebar-header h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
   transition: opacity 0.3s ease;
   color: white;
   flex: 1;
@@ -46,11 +46,11 @@
 
 .sidebar-header .toggle-btn {
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   flex-shrink: 0;
-  padding: 8px;
-  width: 40px;
-  height: 40px;
+  padding: 6px;
+  width: 36px;
+  height: 36px;
   margin-left: auto;
   order: 2;
 }
