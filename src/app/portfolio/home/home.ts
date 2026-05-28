@@ -33,7 +33,8 @@ constructor(private cdr: ChangeDetectorRef){}
     next: (res: any) => {
       console.log('HOME RESPONSE >>>', res);
 
-      this.featuredProjects = res?.data ?? [];
+      // Filter only featured projects
+      this.featuredProjects = (res?.data ?? []).filter((project: any) => project.isFeatured === true);
 
       console.log('FEATURED >>>', this.featuredProjects);
 

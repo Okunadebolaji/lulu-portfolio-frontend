@@ -330,7 +330,8 @@
 
 .project-name {
   .project-info {
-    @include flex-center;
+    display: flex;
+    align-items: flex-start;
     gap: $space-md;
 
     .project-thumbnail {
@@ -342,6 +343,7 @@
       border: 1px solid $outline-variant;
       flex-shrink: 0;
       background-color: $surface-container;
+      margin-top: 4px;
     }
 
     .project-details {
