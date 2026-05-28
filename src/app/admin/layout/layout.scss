@@ -282,6 +282,25 @@
     transform: translateX(-250px);
   }
 
+  /* Keep sidebar toggle button visible but positioned properly */
+  .sidebar-header .toggle-btn {
+    display: flex !important;
+    position: relative;
+    z-index: 101;
+    background: #2a2a2a !important;
+    border-radius: 50%;
+    padding: 10px !important;
+  }
+
+  .sidebar-header .toggle-btn:hover {
+    background: #3a3a3a !important;
+  }
+
+  .sidebar-header .toggle-btn i {
+    font-size: 22px !important;
+    color: #4CAF50 !important;
+  }
+
   .main-content {
     width: 100%;
   }
