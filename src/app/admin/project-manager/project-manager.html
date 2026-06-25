@@ -122,6 +122,19 @@
         </span>
       </div>
 
+      <!-- Is Featured -->
+      <div class="form-group form-group-checkbox">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            formControlName="isFeatured"
+            class="checkbox-input"
+          />
+          <span class="checkbox-text">⭐ Mark as Featured Project</span>
+        </label>
+        <small class="hint">Featured projects are highlighted on the homepage.</small>
+      </div>
+
       <!-- Hidden field for image URL -->
       <input 
         type="hidden" 
@@ -157,7 +170,7 @@
     </div>
 
     <div class="projects-grid">
-      <div class="project-card" *ngFor="let project of projects">
+      <div class="project-card" *ngFor="let project of pagedProjects">
         <img 
           *ngIf="project.thumbnailUrl"
           [src]="project.thumbnailUrl" 
@@ -168,7 +181,6 @@
           <h3>{{ project.title }}</h3>
           <p class="description">{{ project.description }}</p>
           <div class="project-links">
-            <!-- ✅ FIX #3: Use [attr.href] for external links -->
             <a 
               [attr.href]="project.liveUrl" 
               target="_blank" 
@@ -178,7 +190,6 @@
             >
               🌐 Live
             </a>
-            <!-- ✅ FIX #3: Use [attr.href] for external links -->
             <a 
               [attr.href]="project.githubUrl" 
               target="_blank" 
@@ -205,6 +216,40 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button
+        class="pagination-btn"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        ← Prev
+      </button>
+
+      <div class="page-numbers">
+        <button
+          *ngFor="let page of getPageNumbers()"
+          class="page-number"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+      </div>
+
+      <button
+        class="pagination-btn"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next →
+      </button>
+
+      <span class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }} ({{ projects.length }} total)
+      </span>
     </div>
   </div>
 </div>

@@ -856,3 +856,94 @@ a:focus-visible {
   }
 }
 }
+// ==================== PAGINATION ====================
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+
+  .pagination-btn {
+    padding: 0.5rem 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #374151;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: $primary-color;
+      color: white;
+      border-color: $primary-color;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .page-number {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #374151;
+    transition: all 0.2s ease;
+
+    &:hover { background: $primary-color; color: white; border-color: $primary-color; }
+    &.active { background: $primary-color; color: white; border-color: $primary-color; font-weight: 600; }
+  }
+
+  .pagination-info {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-left: 0.5rem;
+  }
+}
+
+// ==================== IS FEATURED CHECKBOX ====================
+.form-group-checkbox {
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      accent-color: $primary-color;
+      cursor: pointer;
+    }
+
+    .checkbox-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #1f2937;
+    }
+  }
+
+  .hint {
+    display: block;
+    margin-top: 0.4rem;
+    margin-left: 30px;
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+}

@@ -12,7 +12,7 @@
   <!-- PROJECT GRID -->
   <div class="projects-grid">
     <app-project-card
-      *ngFor="let project of projects"
+      *ngFor="let project of pagedProjects"
       [project]="project"
       (projectClick)="onProjectClick($event)"
       (liveClick)="onLiveClick($event)"
@@ -23,6 +23,36 @@
   <!-- NO PROJECTS STATE -->
   <div *ngIf="projects.length === 0" class="empty-state">
     <p>No projects found</p>
+  </div>
+
+  <!-- PAGINATION -->
+  <div *ngIf="totalPages > 1" class="pagination">
+    <button
+      class="pagination-btn"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      ← Prev
+    </button>
+
+    <div class="page-numbers">
+      <button
+        *ngFor="let page of getPageNumbers()"
+        class="page-number"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    </div>
+
+    <button
+      class="pagination-btn"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      Next →
+    </button>
   </div>
 
 </section>

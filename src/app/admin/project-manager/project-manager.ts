@@ -15,6 +15,7 @@ export class ProjectManager implements OnInit {
   // 📋 Form state
   projectForm!: FormGroup;
   projects: any[] = [];
+  pagedProjects: any[] = [];
   isLoading = false;
   selectedProject: any = null;
   isEditing = false;
@@ -23,7 +24,12 @@ export class ProjectManager implements OnInit {
   uploadProgress = 0;
   uploadError = '';
   uploadedImageUrl = '';
-  isImageUploaded = false; // ✅ NEW: Track upload status explicitly
+  isImageUploaded = false;
+
+  // 📖 PAGINATION
+  currentPage = 1;
+  pageSize = 6;
+  totalPages = 0;
 
   // 📊 UI state
   showForm = false;
@@ -49,9 +55,10 @@ export class ProjectManager implements OnInit {
     this.projectForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      thumbnailUrl: [''], // ✅ FIX #1: Make optional during form init
+      thumbnailUrl: [''],
      liveUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+\..+/)]],
       githubUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+\..+/)]],
+      isFeatured: [false],
     });
   }
 
@@ -62,8 +69,9 @@ export class ProjectManager implements OnInit {
     this.api.getProjects().subscribe({
       next: (response) => {
         this.projects = response.data || [];
+        this.currentPage = 1;
+        this.updatePagedProjects();
         this.isLoading = false;
-        // ✅ FIX #8: Trigger change detection after load
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -72,6 +80,27 @@ export class ProjectManager implements OnInit {
         console.error(error);
       }
     });
+  }
+
+  updatePagedProjects(): void {
+    this.totalPages = Math.ceil(this.projects.length / this.pageSize);
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.pagedProjects = this.projects.slice(start, start + this.pageSize);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagedProjects();
+      this.cdr.detectChanges();
+    }
+  }
+
+  nextPage(): void { this.goToPage(this.currentPage + 1); }
+  prevPage(): void { this.goToPage(this.currentPage - 1); }
+
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   openCreateForm(): void {
@@ -103,6 +132,7 @@ export class ProjectManager implements OnInit {
       thumbnailUrl: project.thumbnailUrl,
       liveUrl: project.liveUrl,
       githubUrl: project.githubUrl,
+      isFeatured: project.isFeatured ?? false,
     });
     
     // ✅ FIX #2: Mark existing image as already uploaded
