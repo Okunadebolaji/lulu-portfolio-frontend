@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api';
 import { Auth } from '../../core/services/auth';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-project-manager',
@@ -282,35 +283,33 @@ export class ProjectManager implements OnInit {
     const payload = this.projectForm.value;
 
     if (this.isEditing && this.selectedProject) {
-      // ✅ FIX #2: UPDATE existing project
       this.api.updateProject(this.selectedProject.id, payload).subscribe({
-        next: (response) => {
-          this.successMessage = 'Project updated successfully';
+        next: () => {
           this.isLoading = false;
           this.loadProjects();
           this.closeForm();
           this.cdr.detectChanges();
+          Swal.fire({ icon: 'success', title: 'Updated!', text: 'Project updated successfully.', confirmButtonColor: '#003ec7', timer: 2500, timerProgressBar: true });
         },
         error: (error) => {
-          this.errorMessage = error.error?.message || 'Failed to update project';
           this.isLoading = false;
           this.cdr.detectChanges();
+          Swal.fire({ icon: 'error', title: 'Update Failed', text: error.error?.message || 'Failed to update project.', confirmButtonColor: '#ba1a1a' });
         }
       });
     } else {
-      // ✅ CREATE new project
       this.api.createProject(payload).subscribe({
-        next: (response) => {
-          this.successMessage = 'Project created successfully';
+        next: () => {
           this.isLoading = false;
           this.loadProjects();
           this.closeForm();
           this.cdr.detectChanges();
+          Swal.fire({ icon: 'success', title: 'Created!', text: 'Project created successfully.', confirmButtonColor: '#003ec7', timer: 2500, timerProgressBar: true });
         },
         error: (error) => {
-          this.errorMessage = error.error?.message || 'Failed to create project';
           this.isLoading = false;
           this.cdr.detectChanges();
+          Swal.fire({ icon: 'error', title: 'Create Failed', text: error.error?.message || 'Failed to create project.', confirmButtonColor: '#ba1a1a' });
         }
       });
     }
@@ -319,23 +318,31 @@ export class ProjectManager implements OnInit {
   // ==================== DELETE ====================
 
   deleteProject(projectId: number): void {
-    if (!confirm('Are you sure you want to delete this project?')) {
-      return;
-    }
-
-    this.isLoading = true;
-    this.api.deleteProject(projectId.toString()).subscribe({
-      next: (response) => {
-        this.successMessage = 'Project deleted successfully';
-        this.isLoading = false;
-        this.loadProjects();
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        this.errorMessage = error.error?.message || 'Failed to delete project';
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }
+    Swal.fire({
+      title: 'Delete Project?',
+      text: 'This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ba1a1a',
+      cancelButtonColor: '#999',
+      confirmButtonText: 'Yes, Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.isLoading = true;
+      this.api.deleteProject(projectId.toString()).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.loadProjects();
+          this.cdr.detectChanges();
+          Swal.fire({ icon: 'success', title: 'Deleted!', text: 'Project deleted successfully.', confirmButtonColor: '#003ec7', timer: 2000, timerProgressBar: true });
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          Swal.fire({ icon: 'error', title: 'Delete Failed', text: error.error?.message || 'Failed to delete project.', confirmButtonColor: '#ba1a1a' });
+        }
+      });
     });
   }
 
