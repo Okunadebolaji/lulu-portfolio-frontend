@@ -28,7 +28,7 @@ export class ProjectManager implements OnInit {
 
   // 📖 PAGINATION
   currentPage = 1;
-  pageSize = 6;
+  pageSize = 3;
   totalPages = 0;
 
   // 📊 UI state

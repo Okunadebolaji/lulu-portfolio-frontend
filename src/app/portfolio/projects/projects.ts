@@ -21,7 +21,7 @@ export class ProjectsComponent implements OnInit {
 
   // Pagination
   currentPage = 1;
-  pageSize = 6;
+  pageSize = 3;
   totalPages = 0;
 
   constructor(private api: ApiService, private cdr: ChangeDetectorRef, private auth : Auth,  private router: Router ) {}
